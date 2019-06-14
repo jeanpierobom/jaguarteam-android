@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="utf-8"?>
+<navigation xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    app:startDestination="@+id/sign_in_screen"
+    android:id="@+id/nav_graph">
+
+    <fragment
+        android:id="@+id/sign_in_screen"
+        android:name="com.example.capstone.SignInScreenFragment"
+        android:label="Sign In Fragment"
+        tools:layout="@layout/sign_in_layout"
+        >
+        <action
+            android:id="@+id/action_sign_in_screen_to_sign_up_screen2"
+            app:destination="@+id/sign_up_screen" />
+    </fragment>
+
+    <fragment
+        android:id="@+id/sign_up_screen"
+        android:name="com.example.capstone.SignUpScreenFragment"
+        android:label="Sign In Fragment"
+        tools:layout="@layout/sign_up_layout"
+        ></fragment>
+</navigation>
