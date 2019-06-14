@@ -25,7 +25,8 @@
             android:id="@+id/textView"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="TextView" />
+            android:text="@string/sign_in_header"
+            android:gravity="center"/>
 
         <android.support.design.widget.TextInputLayout
             android:layout_width="match_parent"
@@ -34,7 +35,7 @@
             <android.support.design.widget.TextInputEditText
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:hint="hint" />
+                android:hint="@string/sign_in_email" />
 
         </android.support.design.widget.TextInputLayout>
 
@@ -45,7 +46,7 @@
             <android.support.design.widget.TextInputEditText
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:hint="hint" />
+                android:hint="@string/sign_in_password" />
         </android.support.design.widget.TextInputLayout>
 
         <TextView
@@ -58,7 +59,13 @@
             android:id="@+id/button"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="Button" />
+            android:text="@string/sign_in_button" />
+
+        <TextView
+            android:id="@+id/to_sign_up"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="@string/sign_in_create_account"/>
 
 
     </LinearLayout>
