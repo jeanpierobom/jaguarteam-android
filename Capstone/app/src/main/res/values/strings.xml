@@ -1,8 +1,5 @@
 <resources>
     <string name="app_name">OutCom</string>
-    <string name="sign_in">Sign in</string>
-    <string name="input_hint_placeholder">label</string>
-    <string name="input_placeholder_placeholder">placeholder</string>
 
     <string name="sign_in_header">Log in</string>
     <string name="sign_in_email">Email</string>
@@ -17,4 +14,23 @@
     <string name="sign_up_confirm_password">Confirm password</string>
     <string name="sign_up_birthday">Day of birth</string>
     <string name="sign_up">Sign up</string>
+
+    <string name="student_home_header">Find a teacher</string>
+    <string name="student_home_location">Location</string>
+    <string name="student_home_date">Date</string>
+    <string name="student_home_search">Search</string>
+    
+    <string name="teacher_card_teaching">Teaches</string>
+    <string name="teacher_card_placeholder">Placeholder</string>
+    <string name="teacher_card_hourly_rate">Hourly Rate</string>
+    <string name="teacher_card_distance">Distance</string>
+
+    
+    <string-array name="student_home_languages">
+        <item>Language</item>
+        <item>A</item>
+        <item>B</item>
+        <item>C</item>
+    </string-array>
+
 </resources>

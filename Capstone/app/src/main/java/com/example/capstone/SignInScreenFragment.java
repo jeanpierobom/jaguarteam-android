@@ -24,11 +24,19 @@ public class SignInScreenFragment extends Fragment {
         View view = inflater.inflate(R.layout.sign_in_layout,container,false);
 
         signUpButton = view.findViewById(R.id.to_sign_up);
+        button = view.findViewById(R.id.sign_in_button);
 
         signUpButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 Navigation.findNavController(getActivity(), R.id.navHostFragment).navigate(R.id.action_sign_in_screen_to_sign_up_screen);
+            }
+        });
+
+        button.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Navigation.findNavController(getActivity(),R.id.navHostFragment).navigate(R.id.action_sign_in_screen_to_student_home_search);
             }
         });
 

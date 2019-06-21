@@ -14,6 +14,9 @@
         <action
             android:id="@+id/action_sign_in_screen_to_sign_up_screen"
             app:destination="@+id/sign_up_screen" />
+        <action
+            android:id="@+id/action_sign_in_screen_to_student_home_search"
+            app:destination="@id/student_home_search" />
     </fragment>
 
     <fragment
@@ -21,5 +24,12 @@
         android:name="com.example.capstone.SignUpScreenFragment"
         android:label="Sign In Fragment"
         tools:layout="@layout/sign_up_layout"
+        ></fragment>
+
+    <fragment
+        android:id="@+id/student_home_search"
+        android:name="com.example.capstone.StudentHomeFragment"
+        android:label="Student Home Search"
+        tools:layout="@layout/student_home_layout"
         ></fragment>
 </navigation>
