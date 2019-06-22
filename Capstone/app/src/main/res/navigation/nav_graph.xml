@@ -17,6 +17,9 @@
         <action
             android:id="@+id/action_sign_in_screen_to_student_home_search"
             app:destination="@id/student_home_search" />
+        <action
+            android:id="@+id/action_sign_in_screen_to_teacher_profile_confirmation"
+            app:destination="@id/teacher_profile_confirmation" />
     </fragment>
 
     <fragment
@@ -31,5 +34,12 @@
         android:name="com.example.capstone.StudentHomeFragment"
         android:label="Student Home Search"
         tools:layout="@layout/student_home_layout"
+        ></fragment>
+
+    <fragment
+        android:id="@+id/teacher_profile_confirmation"
+        android:name="com.example.capstone.TeacherProfileConfirmationFragment"
+        android:label="Teacher Profile Confirmation"
+        tools:layout="@layout/teacher_profile_confirmation_layout"
         ></fragment>
 </navigation>
