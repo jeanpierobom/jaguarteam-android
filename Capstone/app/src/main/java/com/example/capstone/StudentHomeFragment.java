@@ -4,6 +4,7 @@ import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
+import android.util.JsonReader;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -11,6 +12,8 @@ import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.LinearLayout;
 import android.widget.ListView;
+
+import org.json.JSONObject;
 
 import java.util.ArrayList;
 
@@ -34,11 +37,19 @@ public class StudentHomeFragment extends Fragment {
             @Override
             public void onClick(View v) {
                 for(int i = 0; i<testNames.length; i++){
+
+                    APICaller.Get("www.get.this", new APICallBack() {
+                        @Override
+                        public void callBack(JSONObject jsonObject) {
+
+                        }
+                    });
                     Teacher t = new Teacher(testNames[i]);
                     teachers.add(t);
                 }
                 teacherCardAdapter = new TeacherCardAdapter(getContext(),teachers);
                 searchResults.setAdapter(teacherCardAdapter);
+
             }
         });
 
