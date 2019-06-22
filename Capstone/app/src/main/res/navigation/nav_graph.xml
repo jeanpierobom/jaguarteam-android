@@ -17,6 +17,9 @@
         <action
             android:id="@+id/action_sign_in_screen_to_student_home_search"
             app:destination="@id/student_home_search" />
+        <action
+            android:id="@+id/action_sign_in_screen_to_teacher_profile_confirmation"
+            app:destination="@id/teacher_profile_confirmation" />
     </fragment>
 
     <fragment
