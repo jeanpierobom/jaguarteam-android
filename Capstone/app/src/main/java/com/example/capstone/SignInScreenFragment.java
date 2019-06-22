@@ -17,6 +17,7 @@ public class SignInScreenFragment extends Fragment {
 
     private Button button;
     private TextView signUpButton;
+    private Button toTeacherProfileConfirmation;
 
     @Nullable
     @Override
@@ -24,7 +25,15 @@ public class SignInScreenFragment extends Fragment {
         View view = inflater.inflate(R.layout.sign_in_layout,container,false);
 
         signUpButton = view.findViewById(R.id.to_sign_up);
+        toTeacherProfileConfirmation = view.findViewById(R.id.to_teacher_profile_confirmation);
         button = view.findViewById(R.id.sign_in_button);
+
+        toTeacherProfileConfirmation.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Navigation.findNavController(getActivity(), R.id.navHostFragment).navigate(R.id.action_sign_in_screen_to_teacher_profile_confirmation);
+            }
+        });
 
         signUpButton.setOnClickListener(new View.OnClickListener() {
             @Override
