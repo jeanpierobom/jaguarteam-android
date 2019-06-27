@@ -31,19 +31,9 @@ public class APICaller {
                         int responseCode = myConnexion.getResponseCode();
                         if(responseCode == 200){
                             InputStream responseBody = myConnexion.getInputStream();
-                            BufferedReader reader = new BufferedReader(new InputStreamReader(responseBody, "UTF-8"));
-                            StringBuilder responseStrBuilder = new StringBuilder();
+                            JsonReader reader = new JsonReader(new InputStreamReader(responseBody, "UTF-8"));
 
-                            String inputStr;
-                            while ((inputStr = reader.readLine()) != null)
-                                responseStrBuilder.append(inputStr);
-
-                            try{
-                                jsonObject = new JSONObject(responseStrBuilder.toString());
-                            }catch (JSONException e) {
-                                e.printStackTrace();
-                                jsonObject = null;
-                            }
+                            call.callBack(reader);
                         }
                         else{
                             Log.e("ASYNC ERROR", "Response from server was: " + String.valueOf(responseCode));
@@ -54,7 +44,6 @@ public class APICaller {
                     }
                 }
             });
-            call.callBack(jsonObject);
         }catch (MalformedURLException e) {
             e.printStackTrace();
         }
