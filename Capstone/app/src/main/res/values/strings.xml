@@ -5,6 +5,7 @@
     <string name="sign_in_email">Email</string>
     <string name="sign_in_password">Password</string>
     <string name="sign_in_button">LOG IN</string>
+    <string name="sign_in_google_button">LOG IN WITH GOOGLE</string>
     <string name="sign_in_create_account">No Account? Sign Up!</string>
 
     <string name="teacher_profile_confirmation_button">TEACHER PROFILE CONFIRMATION</string>
@@ -34,5 +35,16 @@
         <item>B</item>
         <item>C</item>
     </string-array>
+
+    <!-- Strings for AppAuth, they will be removed from the project (or renamed) soon -->
+    <string name="welcome_to_appauth">Welcome to AppAuth Codelab</string>
+    <string name="make_api_call">Make API Call</string>
+    <string name="make_authorization_request">Make Authorization Request</string>
+    <string name="sign_out">Sign Out</string>
+    <string name="request_complete">API Call Successful.</string>
+    <string name="request_failed">API Call Failed.</string>
+    <string name="tools_given_name">Some FirstName</string>
+    <string name="tools_family_name">LastName</string>
+    <string name="tools_full_name">Some FirstName LastName</string>
 
 </resources>

@@ -1,5 +1,6 @@
 package com.example.capstone;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
@@ -16,6 +17,7 @@ public class SignInScreenFragment extends Fragment {
 
 
     private Button button;
+    private Button signInGoogleButton;
     private TextView signUpButton;
     private Button toTeacherProfileConfirmation;
 
@@ -25,6 +27,7 @@ public class SignInScreenFragment extends Fragment {
         View view = inflater.inflate(R.layout.sign_in_layout,container,false);
 
         signUpButton = view.findViewById(R.id.to_sign_up);
+        signInGoogleButton = view.findViewById(R.id.sign_in_google_button);
         toTeacherProfileConfirmation = view.findViewById(R.id.to_teacher_profile_confirmation);
         button = view.findViewById(R.id.sign_in_button);
 
@@ -32,6 +35,14 @@ public class SignInScreenFragment extends Fragment {
             @Override
             public void onClick(View v) {
                 Navigation.findNavController(getActivity(), R.id.navHostFragment).navigate(R.id.action_sign_in_screen_to_teacher_profile_confirmation);
+            }
+        });
+
+        signInGoogleButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(getActivity(), com.google.codelabs.appauth.MainActivity.class);
+                startActivity(intent);
             }
         });
 
