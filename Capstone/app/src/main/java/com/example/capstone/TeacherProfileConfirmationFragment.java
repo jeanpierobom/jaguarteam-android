@@ -6,8 +6,6 @@ import android.os.Bundle;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
-//import android.content.Context;
-
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -16,7 +14,6 @@ import android.view.inputmethod.InputMethodManager;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Toast;
-
 import com.google.android.gms.maps.CameraUpdateFactory;
 import com.google.android.gms.maps.GoogleMap;
 import com.google.android.gms.maps.MapView;
@@ -24,22 +21,11 @@ import com.google.android.gms.maps.OnMapReadyCallback;
 import com.google.android.gms.maps.model.LatLng;
 import com.google.android.gms.maps.model.Marker;
 import com.google.android.gms.maps.model.MarkerOptions;
-
 import java.io.IOException;
 import java.util.List;
 
-//import com.google.android.gms.maps.CameraUpdateFactory;
-//import com.google.android.gms.maps.GoogleMap;
-//import com.google.android.gms.maps.MapView;
-//import com.google.android.gms.maps.MapsInitializer;
-//import com.google.android.gms.maps.model.BitmapDescriptorFactory;
-//import com.google.android.gms.maps.model.CameraPosition;
-//import com.google.android.gms.maps.model.LatLng;
-//import com.google.android.gms.maps.model.MarkerOptions;
-
 public class TeacherProfileConfirmationFragment extends Fragment implements OnMapReadyCallback, GoogleMap.OnMarkerClickListener, GoogleMap.OnMarkerDragListener, View.OnClickListener {
     private GoogleMap mMap;
-//    private Context mContext;
     MapView mMapView;
     private Marker mSpot;
     private Double[] locationCoordinates = new Double[2];
@@ -49,16 +35,17 @@ public class TeacherProfileConfirmationFragment extends Fragment implements OnMa
     Button findLocationButton;
     Button confirmButton;
     EditText inputLocationName;
+    EditText inputMessage;
 
     @Nullable
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.teacher_profile_confirmation_layout, container, false);
         geocoder = new Geocoder(this.getActivity());
-//        geocoder = new Geocoder(view.getContext());
 
         findLocationButton = view.findViewById(R.id.findLocationButton);
         inputLocationName = view.findViewById(R.id.inputLocationName);
+        inputMessage = view.findViewById(R.id.inputMessage);
         confirmButton = view.findViewById(R.id.confirmButton);
 
         findLocationButton.setOnClickListener(this);
@@ -134,11 +121,12 @@ public class TeacherProfileConfirmationFragment extends Fragment implements OnMa
         }
     }
 
-    public void sendRequest (Double[] locationCoordinates, String locationName) {
+    public void sendRequest (Double[] locationCoordinates, String locationName, String inputMessage) {
         // TODO: send data to database.
-        Toast.makeText(this.getActivity(), locationName + " \n" + locationCoordinates[0] + ", " + locationCoordinates[1], Toast.LENGTH_LONG).show();
+        Toast.makeText(this.getActivity(), locationName + "\n" + locationCoordinates[0] + ", " + locationCoordinates[1] + "\n" + inputMessage, Toast.LENGTH_LONG).show();
         Log.d("To Database", "locationName: " + locationName);
         Log.d("To Database", "locationCoordinates: " + locationCoordinates[0] + ", " + locationCoordinates[1]);
+        Log.d("To Database", "inputMessage: " + inputMessage);
     }
 
     @Override
@@ -153,7 +141,7 @@ public class TeacherProfileConfirmationFragment extends Fragment implements OnMa
                 break;
             case R.id.confirmButton:
                 Log.d("Confirm Button", "Clicked");
-                sendRequest(locationCoordinates, locationName);
+                sendRequest(locationCoordinates, locationName, inputMessage.getText().toString());
                 break;
         }
     }
