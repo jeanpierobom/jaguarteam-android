@@ -75,6 +75,14 @@
             android:background="@color/colorPrimaryDark"
             android:text="@string/teacher_profile_confirmation_button" />
 
+        <Button
+            android:id="@+id/to_teacher_profile"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="10dp"
+            android:background="@color/colorPrimaryDark"
+            android:text="@string/to_teacher_profile" />
+
 
     </LinearLayout>
 </LinearLayout>
