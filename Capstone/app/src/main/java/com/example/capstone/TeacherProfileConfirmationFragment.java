@@ -13,6 +13,9 @@ import android.view.ViewGroup;
 import android.view.inputmethod.InputMethodManager;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.ImageView;
+import android.widget.RatingBar;
+import android.widget.TextView;
 import android.widget.Toast;
 import com.google.android.gms.maps.CameraUpdateFactory;
 import com.google.android.gms.maps.GoogleMap;
@@ -32,10 +35,11 @@ public class TeacherProfileConfirmationFragment extends Fragment implements OnMa
     private String locationName;
     List<Address> addresses;
     Geocoder geocoder;
-    Button findLocationButton;
-    Button confirmButton;
-    EditText inputLocationName;
-    EditText inputMessage;
+    Button findLocationButton, confirmButton;
+    EditText inputLocationName, inputMessage;
+    ImageView userAvatar;
+    RatingBar userRating;
+    TextView userName, userDescription, classTime, classLanguage, classCost;
 
     @Nullable
     @Override
@@ -47,9 +51,37 @@ public class TeacherProfileConfirmationFragment extends Fragment implements OnMa
         inputLocationName = view.findViewById(R.id.inputLocationName);
         inputMessage = view.findViewById(R.id.inputMessage);
         confirmButton = view.findViewById(R.id.confirmButton);
+        userAvatar = view.findViewById(R.id.userAvatar);
+        userName = view.findViewById(R.id.userName);
+        userDescription = view.findViewById(R.id.userDescription);
+        userRating = view.findViewById(R.id.userRating);
+        classTime = view.findViewById(R.id.classTime);
+        classLanguage = view.findViewById(R.id.classLanguage);
+        classCost = view.findViewById(R.id.classCost);
 
         findLocationButton.setOnClickListener(this);
         confirmButton.setOnClickListener(this);
+
+        // TODO: the following data should come from the database:
+        // placeholder_avatar from https://pravatar.cc/
+        int avatar = R.drawable.placeholder_avatar;
+        String name = "Jean Coutu";
+        String teacherType = "Community Teacher";
+        String location = "Surrey, Canada";
+        int rating = 4;
+        String time = "3:00 PM - 4:00 PM Sat, Jun 3";
+        String language = "English";
+        double cost = 15.00;
+
+        // Populating UI
+        userAvatar.setImageResource(avatar);
+        userName.setText(name);
+        userDescription.setText(teacherType + " from " + location);
+        userRating.setRating(rating);
+        classTime.setText(time);
+        classLanguage.setText(language);
+        classCost.setText("CA$ " + cost);
+
 
         mMapView = view.findViewById(R.id.map);
         mMapView.onCreate(savedInstanceState);
