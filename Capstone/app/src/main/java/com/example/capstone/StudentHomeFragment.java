@@ -59,26 +59,28 @@ public class StudentHomeFragment extends Fragment {
             }
         });
 
-        APICaller.Get("https://1hxwhklro6.execute-api.us-east-1.amazonaws.com/prod/city", new APICallBack() {
-            @Override
-            public void callBack(JsonReader jsonObject) {
-                cities = JsonAPIParser.ParseCityRequest(jsonObject);
-            }
-        });
+//        APICaller.Get("https://1hxwhklro6.execute-api.us-east-1.amazonaws.com/prod/city", new APICallBack() {
+//            @Override
+//            public void callBack(JsonReader jsonObject) {
+//                cities = JsonAPIParser.ParseCityRequest(jsonObject);
+//            }
+//        });
 
 
 
         searchButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-
+                Log.e("TEACHER SEARCH","Button tapped");
                 APICaller.Get("https://1hxwhklro6.execute-api.us-east-1.amazonaws.com/prod/teacher/", new APICallBack() {
                     @Override
                     public void callBack(JsonReader jsonObject) {
+                        Log.e("TEACHER SEARCH","CallbackCalled");
                         teachers = JsonAPIParser.ParseTeacherRequest(jsonObject);
                         getActivity().runOnUiThread(new Runnable() {
                             @Override
                             public void run() {
+
                                 teacherCardAdapter = new TeacherCardAdapter(getContext(),teachers);
                             searchResults.setAdapter(teacherCardAdapter);
                             }
