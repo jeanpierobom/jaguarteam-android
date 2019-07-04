@@ -2,4 +2,16 @@
 <resources>
     <dimen name="Standard_Margin">32dp</dimen>
     <dimen name="card_padding">16dp</dimen>
+
+    <dimen name="activity_horizontal_margin">16dp</dimen>
+    <dimen name="activity_vertical_margin">16dp</dimen>
+    <dimen name="action_margin">16dp</dimen>
+
+    <dimen name="viewPadding">16dp</dimen>
+    <dimen name="sectionSmallMargin">16dp</dimen>
+    <dimen name="sectionSmallerMargin">8dp</dimen>
+    <dimen name="sectionLargeMargin">32dp</dimen>
+    <dimen name="sectionLargerMargin">48dp</dimen>
+    <!--<dimen name="buttonCornerRadius">10dp</dimen>-->
+
 </resources>
