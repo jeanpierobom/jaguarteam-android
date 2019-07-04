@@ -59,6 +59,23 @@ public class JsonAPIParser {
         return teachers;
     }
 
+    public static Teacher ParseTeacherProfileRequest(JsonReader reader){
+        Teacher teacher = new Teacher();
+
+//        try {
+//            reader.beginObject();
+//            while(reader.hasNext()){
+                teacher = readTeacherObject(reader);
+//            }
+//            reader.endObject();
+//            reader.close();
+//        } catch (IOException e) {
+//            e.printStackTrace();
+//        }
+
+        return teacher;
+    }
+
     private static String readCityObject(JsonReader reader){
         String city = "";
         String name;
@@ -120,6 +137,44 @@ public class JsonAPIParser {
         return classType;
     }
 
+    private static Availability readAvailabilityTypeObject(JsonReader reader){
+        String date = "";
+        String name = "";
+        ArrayList<String> availabilities = new ArrayList<String>();
+        try {
+            reader.beginObject();
+            while(reader.hasNext()){
+                name = reader.nextName();
+                if(name.equals("date")) {
+                    date = reader.nextString();
+                }
+                else if(name.equals("timeSlots")){
+                    reader.beginArray();
+//                    while(reader.hasNext()){
+
+//                        try {
+//                            reader.beginObject();
+                            while(reader.hasNext()){
+                                availabilities.add(reader.nextString());
+                            }
+//                            reader.endObject();
+//                        } catch (IOException e) {
+//                            e.printStackTrace();
+//                        }
+
+//                    }
+                    reader.endArray();
+                }else{
+                    reader.skipValue();
+                }
+            }
+            reader.endObject();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+        return new Availability(name, date, availabilities);
+    }
+
     private static Teacher readTeacherObject(JsonReader reader){
         int id = 0;
         String name = "";
@@ -133,6 +188,7 @@ public class JsonAPIParser {
         float distance = 0;
         float rating = 0;
         ArrayList<Rating> ratings = new ArrayList<Rating>();
+        ArrayList<Availability> availability = new ArrayList<Availability>();
 
         String key;
 
@@ -196,6 +252,12 @@ public class JsonAPIParser {
                         classes.add(readClassTypeObject(reader));
                     }
                     reader.endArray();
+                }else if(key.equals("availability")){
+                    reader.beginArray();
+                    while(reader.hasNext()){
+                        availability.add(readAvailabilityTypeObject(reader));
+                    }
+                    reader.endArray();
                 }else if(key.equals("ratings")){
                     reader.beginArray();
                     while(reader.hasNext()){
@@ -210,7 +272,7 @@ public class JsonAPIParser {
         } catch (IOException e) {
             e.printStackTrace();
         }
-        return new Teacher(id,name,email,bio,city,classes.toArray(new String[0]),countryId,languages.toArray(new String[0]),hourRate,distance,rating,ratings.toArray(new Rating[0]));
+        return new Teacher(id,name,email,bio,city,classes.toArray(new String[0]),countryId,languages.toArray(new String[0]),hourRate,distance,rating,ratings.toArray(new Rating[0]), availability);
     }
 
     private static Rating readRatingObject(JsonReader reader){

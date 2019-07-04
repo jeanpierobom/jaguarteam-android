@@ -81,7 +81,7 @@ public class StudentHomeFragment extends Fragment {
                             @Override
                             public void run() {
 
-                                teacherCardAdapter = new TeacherCardAdapter(getContext(),teachers);
+                            teacherCardAdapter = new TeacherCardAdapter(getContext(),teachers);
                             searchResults.setAdapter(teacherCardAdapter);
                             }
                         });

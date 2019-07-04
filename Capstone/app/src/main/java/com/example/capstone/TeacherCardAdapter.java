@@ -7,7 +7,6 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
-import android.widget.EditText;
 import android.widget.TextView;
 
 import java.util.ArrayList;
@@ -34,7 +33,7 @@ public class TeacherCardAdapter extends ArrayAdapter<Teacher> {
 
         Teacher currentTeacher = teachers.get(position);
 
-        ((TextView)teacherCard.findViewById(R.id.name)).setText(currentTeacher.getName());
+        ((TextView)teacherCard.findViewById(R.id.availability_date)).setText(currentTeacher.getName());
         ((TextView)teacherCard.findViewById(R.id.languages)).setText(currentTeacher.getLanguage(0));
         ((TextView)teacherCard.findViewById(R.id.distance)).setText(String.valueOf(currentTeacher.getDistance()));
         ((TextView)teacherCard.findViewById(R.id.hourly_rate)).setText(String.valueOf(currentTeacher.getHourlyRate()));
