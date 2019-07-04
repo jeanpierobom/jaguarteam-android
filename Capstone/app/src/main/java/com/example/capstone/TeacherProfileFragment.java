@@ -12,6 +12,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.LinearLayout;
 import android.widget.ListView;
+import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import java.lang.reflect.Array;
@@ -44,10 +45,11 @@ public class TeacherProfileFragment extends Fragment {
                 getActivity().runOnUiThread(new Runnable() {
                     @Override
                     public void run() {
-                    teacherCardAdapter = new AvailabilityCardAdapter(getContext(),teachers.get(0).getAvailability());
-                    teacherResults.setAdapter(teacherCardAdapter);
+//                    teacherCardAdapter = new AvailabilityCardAdapter(getContext(),teachers.get(0).getAvailability());
+//                    teacherResults.setAdapter(teacherCardAdapter);
 
                     loadActivities(teachers);
+                    loadAvailabilities(teachers);
 
                     }
                 });
@@ -66,6 +68,27 @@ public class TeacherProfileFragment extends Fragment {
             newClassType.setText(classType);
             linearLayout.addView(newClassType);
         }
+    }
 
+    public void loadAvailabilities(ArrayList<Teacher> teachers){
+        LinearLayout linearLayout = getView().findViewById(R.id.availability_result_card);
+
+        RelativeLayout relativeLayout = getView().findViewById(R.id.relative_availability);
+
+
+        for (Availability availability : teachers.get(0).getAvailability()) {
+
+            TextView newAvailability = new TextView(linearLayout.getContext());
+            newAvailability.setText(availability.getDate());
+            linearLayout.addView(newAvailability);
+
+            for (String timeSlot : availability.getTimeSlots()) {
+                TextView newTimeSlot = new TextView(relativeLayout.getContext());
+                newTimeSlot.setText(timeSlot);
+                linearLayout.addView(newTimeSlot);
+
+            }
+
+        }
     }
 }
