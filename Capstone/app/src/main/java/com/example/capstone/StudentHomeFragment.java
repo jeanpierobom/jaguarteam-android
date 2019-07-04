@@ -89,10 +89,12 @@ public class StudentHomeFragment extends Fragment {
                 APICaller.Get("https://1hxwhklro6.execute-api.us-east-1.amazonaws.com/prod/teacher/?cityId="+ String.valueOf(cityID)+"&languageId="+languageID, new APICallBack() {
                     @Override
                     public void callBack(JsonReader jsonObject) {
+                        Log.e("TEACHER SEARCH","CallbackCalled");
                         teachers = JsonAPIParser.ParseTeacherRequest(jsonObject);
                         getActivity().runOnUiThread(new Runnable() {
                             @Override
                             public void run() {
+
                                 teacherCardAdapter = new TeacherCardAdapter(getContext(),teachers);
                             searchResults.setAdapter(teacherCardAdapter);
                             }
