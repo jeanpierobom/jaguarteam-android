@@ -18,6 +18,7 @@ import android.widget.Spinner;
 import org.json.JSONObject;
 
 import java.util.ArrayList;
+import java.util.Map;
 
 public class StudentHomeFragment extends Fragment {
 
@@ -25,8 +26,8 @@ public class StudentHomeFragment extends Fragment {
     private Spinner languagesDropDown;
     private EditText dateInput;
     private EditText locationInput;
-    private ArrayList<String> languageList;
-    private ArrayList<String> cities;
+    private Map<String, Integer> languageList;
+    private Map<String,Integer> cities;
     ListView searchResults;
     TeacherCardAdapter teacherCardAdapter;
 
@@ -49,7 +50,11 @@ public class StudentHomeFragment extends Fragment {
             @Override
             public void callBack(JsonReader jsonObject) {
                 languageList = JsonAPIParser.ParseLanguageRequest(jsonObject);
-                final ArrayAdapter<String> adapter = new ArrayAdapter<String>(getContext(),android.R.layout.simple_spinner_dropdown_item, languageList);
+                ArrayList<String> str = new ArrayList<String>();
+                for(Map.Entry<String,Integer> entry: languageList.entrySet()){
+                    str.add(entry.getKey());
+                }
+                final ArrayAdapter<String> adapter = new ArrayAdapter<String>(getContext(),android.R.layout.simple_spinner_dropdown_item, str);
                 getActivity().runOnUiThread(new Runnable() {
                     @Override
                     public void run() {
@@ -63,6 +68,7 @@ public class StudentHomeFragment extends Fragment {
             @Override
             public void callBack(JsonReader jsonObject) {
                 cities = JsonAPIParser.ParseCityRequest(jsonObject);
+                Log.e("SHF APICALL:","first city: " + cities.get("Vancouver"));
             }
         });
 
@@ -71,14 +77,24 @@ public class StudentHomeFragment extends Fragment {
         searchButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-
-                APICaller.Get("https://1hxwhklro6.execute-api.us-east-1.amazonaws.com/prod/teacher/", new APICallBack() {
+                int cityID;
+                int languageID = languageList.get(languagesDropDown.getSelectedItem().toString());
+               if(locationInput.getText()!=null && cities!=null) {
+                   cityID = cities.get(locationInput.getText().toString());
+               }
+               else{
+                   cityID = 1;
+               }
+                //Log.e("SHF APICALL","location Input value:" + locationInput.getText().toString());
+                APICaller.Get("https://1hxwhklro6.execute-api.us-east-1.amazonaws.com/prod/teacher/?cityId="+ String.valueOf(cityID)+"&languageId="+languageID, new APICallBack() {
                     @Override
                     public void callBack(JsonReader jsonObject) {
+                        Log.e("TEACHER SEARCH","CallbackCalled");
                         teachers = JsonAPIParser.ParseTeacherRequest(jsonObject);
                         getActivity().runOnUiThread(new Runnable() {
                             @Override
                             public void run() {
+
                                 teacherCardAdapter = new TeacherCardAdapter(getContext(),teachers);
                             searchResults.setAdapter(teacherCardAdapter);
                             }

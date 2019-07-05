@@ -8,7 +8,14 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
+import com.google.android.material.textfield.TextInputEditText;
+
 public class SignUpScreenFragment extends Fragment {
+    private String userType = "student";
+    private TextInputEditText fullName;
+    private TextInputEditText password;
+    private TextInputEditText confirmPassword;
+    private TextInputEditText email;
 
     @Nullable
     @Override
