@@ -107,6 +107,12 @@
                 android:textAppearance="?android:textAppearanceSmall"
                 tools:text="@string/tools_full_name"/>
 
+            <ImageView
+                android:id="@+id/image_test"
+                android:layout_width="fill_parent"
+                android:layout_height="300dp"
+                android:layout_marginTop="16dp" />
+
         </LinearLayout>
 
 
