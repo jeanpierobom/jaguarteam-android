@@ -23,6 +23,8 @@ import android.os.Bundle;
 import android.os.PersistableBundle;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
+
+import com.example.capstone.asynctasks.ImageDownloader;
 import com.google.android.material.snackbar.Snackbar;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.AppCompatButton;
@@ -72,6 +74,8 @@ public class MainActivity extends AppCompatActivity {
   AppCompatTextView mFamilyName;
   AppCompatTextView mFullName;
   ImageView mProfileView;
+  ImageView mImageTest;
+
 
   @Override
   protected void onCreate(Bundle savedInstanceState) {
@@ -85,11 +89,16 @@ public class MainActivity extends AppCompatActivity {
     mFamilyName = (AppCompatTextView) findViewById(R.id.familyName);
     mFullName = (AppCompatTextView) findViewById(R.id.fullName);
     mProfileView = (ImageView) findViewById(R.id.profileImage);
+    mImageTest = (ImageView) findViewById(R.id.image_test);
 
     enablePostAuthorizationFlows();
 
     // wire click listeners
     mAuthorize.setOnClickListener(new AuthorizeListener());
+
+    //Test image
+//    ImageDownloader downloader = new ImageDownloader(mImageTest,1);
+//    downloader.execute("");
   }
 
   private void enablePostAuthorizationFlows() {
@@ -210,8 +219,6 @@ public class MainActivity extends AppCompatActivity {
               Uri.parse("https://www.googleapis.com/oauth2/v4/token") /* token endpoint */
       );
 
-      // Tutorial
-      //String clientId = "511828570984-fuprh0cm7665emlne3rnf9pk34kkn86s.apps.googleusercontent.com";
       // Outcom Appauth
       String clientId = "1024868053428-6jbbeltd4dosd5c3vqq4ochnq5kgvo8f.apps.googleusercontent.com";
       // Outcom Outcom
