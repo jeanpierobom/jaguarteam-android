@@ -2,6 +2,7 @@ package com.example.capstone;
 
 import android.location.Address;
 import android.location.Geocoder;
+import android.media.Image;
 import android.os.Bundle;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
@@ -17,6 +18,8 @@ import android.widget.ImageView;
 import android.widget.RatingBar;
 import android.widget.TextView;
 import android.widget.Toast;
+
+import com.example.capstone.asynctasks.ImageDownloader;
 import com.google.android.gms.maps.CameraUpdateFactory;
 import com.google.android.gms.maps.GoogleMap;
 import com.google.android.gms.maps.MapView;
@@ -65,6 +68,8 @@ public class TeacherProfileConfirmationFragment extends Fragment implements OnMa
         // TODO: the following data should come from the database:
         // placeholder_avatar from https://pravatar.cc/
         int avatar = R.drawable.placeholder_avatar;
+        ImageDownloader imgDownloader = new ImageDownloader(userAvatar, 3);
+        imgDownloader.execute("");
         String name = "Jean Coutu";
         String teacherType = "Community Teacher";
         String location = "Surrey, Canada";
@@ -74,7 +79,7 @@ public class TeacherProfileConfirmationFragment extends Fragment implements OnMa
         double cost = 15.00;
 
         // Populating UI
-        userAvatar.setImageResource(avatar);
+        // userAvatar.setImageResource(avatar);
         userName.setText(name);
         userDescription.setText(teacherType + " from " + location);
         userRating.setRating(rating);
@@ -95,7 +100,8 @@ public class TeacherProfileConfirmationFragment extends Fragment implements OnMa
         mMap = googleMap;
         // TODO: get this from the database?
         LatLng initialPosition = new LatLng(49.224206, -123.108453);
-        mSpot = mMap.addMarker(new MarkerOptions().position(initialPosition).title("Meeting Spot").draggable(true));
+        // Drag and drop doesn't work well with ScrollView, so I'm disabling it.
+        mSpot = mMap.addMarker(new MarkerOptions().position(initialPosition).title("Meeting Spot").draggable(false));
         mMap.moveCamera(CameraUpdateFactory.zoomTo(15));
 
         locationCoordinates[0] = mSpot.getPosition().latitude;
@@ -104,7 +110,8 @@ public class TeacherProfileConfirmationFragment extends Fragment implements OnMa
         moveCamera();
 
         mMap.setOnMarkerClickListener(this);
-        mMap.setOnMarkerDragListener(this);
+        // Drag and drop doesn't work well with ScrollView, so I'm disabling it.
+        // mMap.setOnMarkerDragListener(this);
     }
 
     public void moveCamera () {
