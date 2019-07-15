@@ -14,17 +14,14 @@
         <action
             android:id="@+id/action_sign_in_screen_to_sign_up_screen"
             app:destination="@+id/sign_up_screen" />
-        <!--<action-->
-            <!--android:id="@+id/action_sign_in_screen_to_student_home_search"-->
-            <!--app:destination="@id/student_home_search" -->
-            <!--/>-->
         <action
             android:id="@+id/action_sign_in_screen_to_student_home_search"
-            app:destination="@id/teacher_profile_confirmation"
+            app:destination="@id/student_home_search"
             />
-        <action
-            android:id="@+id/action_sign_in_screen_to_teacher_profile_confirmation"
-            app:destination="@id/teacher_profile_confirmation" />
+        <!--<action-->
+            <!--android:id="@+id/action_sign_in_screen_to_student_home_search"-->
+            <!--app:destination="@id/teacher_profile_confirmation"-->
+            <!--/>-->
     </fragment>
 
     <fragment
@@ -46,5 +43,9 @@
         android:name="com.example.capstone.TeacherProfileConfirmationFragment"
         android:label="Teacher Profile Confirmation"
         tools:layout="@layout/teacher_profile_confirmation_layout"
-        ></fragment>
+        >
+        <action
+            android:id="@+id/action_teacher_profile_confirmation_to_student_home_search"
+            app:destination="@id/student_home_search" />
+    </fragment>
 </navigation>

@@ -1,5 +1,6 @@
 package com.example.capstone;
 
+import android.content.DialogInterface;
 import android.location.Address;
 import android.location.Geocoder;
 import android.media.Image;
@@ -18,6 +19,8 @@ import android.widget.ImageView;
 import android.widget.RatingBar;
 import android.widget.TextView;
 import android.widget.Toast;
+import androidx.appcompat.app.AlertDialog;
+import androidx.navigation.Navigation;
 
 import com.example.capstone.asynctasks.ImageDownloader;
 import com.google.android.gms.maps.CameraUpdateFactory;
@@ -43,12 +46,23 @@ public class TeacherProfileConfirmationFragment extends Fragment implements OnMa
     ImageView userAvatar;
     RatingBar userRating;
     TextView userName, userDescription, classTime, classLanguage, classCost;
+    AlertDialog.Builder alert;
 
     @Nullable
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.teacher_profile_confirmation_layout, container, false);
+
         geocoder = new Geocoder(this.getActivity());
+
+        alert = new AlertDialog.Builder(this.getActivity());
+        alert.setTitle("Class confirmed!");
+        alert.setMessage("Your class has been successfully scheduled and the teacher will be notified soon.");
+        alert.setPositiveButton("OK",new DialogInterface.OnClickListener() {
+            public void onClick(DialogInterface dialog, int id) {
+                Navigation.findNavController(getActivity(),R.id.navHostFragment).navigate(R.id.action_teacher_profile_confirmation_to_student_home_search);
+            }
+        });
 
         findLocationButton = view.findViewById(R.id.findLocationButton);
         inputLocationName = view.findViewById(R.id.inputLocationName);
@@ -67,7 +81,7 @@ public class TeacherProfileConfirmationFragment extends Fragment implements OnMa
 
         // TODO: the following data should come from the database:
         // placeholder_avatar from https://pravatar.cc/
-        int avatar = R.drawable.placeholder_avatar;
+//        int avatar = R.drawable.placeholder_avatar;
         ImageDownloader imgDownloader = new ImageDownloader(userAvatar, 3);
         imgDownloader.execute("");
         String name = "Jean Coutu";
@@ -162,10 +176,12 @@ public class TeacherProfileConfirmationFragment extends Fragment implements OnMa
 
     public void sendRequest (Double[] locationCoordinates, String locationName, String inputMessage) {
         // TODO: send data to database.
-        Toast.makeText(this.getActivity(), locationName + "\n" + locationCoordinates[0] + ", " + locationCoordinates[1] + "\n" + inputMessage, Toast.LENGTH_LONG).show();
+//        Toast.makeText(this.getActivity(), locationName + "\n" + locationCoordinates[0] + ", " + locationCoordinates[1] + "\n" + inputMessage, Toast.LENGTH_LONG).show();
         Log.d("To Database", "locationName: " + locationName);
         Log.d("To Database", "locationCoordinates: " + locationCoordinates[0] + ", " + locationCoordinates[1]);
         Log.d("To Database", "inputMessage: " + inputMessage);
+//        dialog.show();
+        alert.show();
     }
 
     @Override
