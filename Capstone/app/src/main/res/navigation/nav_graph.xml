@@ -36,7 +36,11 @@
         android:name="com.example.capstone.StudentHomeFragment"
         android:label="Student Home Search"
         tools:layout="@layout/student_home_layout"
-        ></fragment>
+        >
+        <action
+            android:id="@+id/action_student_home_search_to_teacher_profile_confirmation"
+            app:destination="@id/teacher_profile_confirmation" />
+    </fragment>
 
     <fragment
         android:id="@+id/teacher_profile_confirmation"

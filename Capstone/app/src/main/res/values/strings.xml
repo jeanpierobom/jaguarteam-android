@@ -29,6 +29,9 @@
     <string name="teacher_card_hourly_rate">Hourly Rate</string>
     <string name="teacher_card_distance">Distance</string>
 
+    <string name="nav_home">home</string>
+    <string name="nav_chat">chat</string>
+
     
     <string-array name="student_home_languages">
         <item>Language</item>
