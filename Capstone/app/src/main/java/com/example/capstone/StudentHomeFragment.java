@@ -31,8 +31,8 @@ public class StudentHomeFragment extends Fragment {
     private EditText locationInput;
     private Map<String, Integer> languageList;
     private Map<String,Integer> cities;
-    ListView searchResults;
-    TeacherCardAdapter teacherCardAdapter;
+    private ListView searchResults;
+    private TeacherCardAdapter teacherCardAdapter;
 
 
     ArrayList<Teacher> teachers;
@@ -47,7 +47,12 @@ public class StudentHomeFragment extends Fragment {
         languagesDropDown = view.findViewById(R.id.language);
         locationInput = view.findViewById(R.id.location);
         teachers = new ArrayList<Teacher>();
-
+        searchResults.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            @Override
+            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+                Log.e("Position Clicked","value: " + id);
+            }
+        });
 
         searchResults.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
@@ -108,12 +113,7 @@ public class StudentHomeFragment extends Fragment {
                             public void run() {
                                 teacherCardAdapter = new TeacherCardAdapter(getContext(),teachers);
                                 searchResults.setAdapter(teacherCardAdapter);
-                                searchResults.setOnItemClickListener(new AdapterView.OnItemClickListener() {
-                                    @Override
-                                    public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-                                        Log.e("Position Clicked","clicked: " + id);
-                                    }
-                                });
+                                Log.e("teacherBuilder","The function reached this point");
                             }
                         });
                     }
