@@ -4,11 +4,14 @@ import android.os.Bundle;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
+import androidx.navigation.Navigation;
+
 import android.util.JsonReader;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.EditText;
@@ -44,6 +47,15 @@ public class StudentHomeFragment extends Fragment {
         languagesDropDown = view.findViewById(R.id.language);
         locationInput = view.findViewById(R.id.location);
         teachers = new ArrayList<Teacher>();
+
+
+        searchResults.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            @Override
+            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+                Log.e("SHF Item Click Func","Event Called");
+                //Navigation.findNavController(getActivity(), R.id.navHostFragment).navigate(R.id.action_student_home_search_to_teacher_profile_confirmation);
+            }
+        });
 
 
         APICaller.Get("https://1hxwhklro6.execute-api.us-east-1.amazonaws.com/prod/language", new APICallBack() {
@@ -94,9 +106,14 @@ public class StudentHomeFragment extends Fragment {
                         getActivity().runOnUiThread(new Runnable() {
                             @Override
                             public void run() {
-
                                 teacherCardAdapter = new TeacherCardAdapter(getContext(),teachers);
-                            searchResults.setAdapter(teacherCardAdapter);
+                                searchResults.setAdapter(teacherCardAdapter);
+                                searchResults.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+                                    @Override
+                                    public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+                                        Log.e("Position Clicked","clicked: " + id);
+                                    }
+                                });
                             }
                         });
                     }

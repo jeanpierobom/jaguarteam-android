@@ -34,7 +34,7 @@ public class SignInScreenFragment extends Fragment {
         toTeacherProfileConfirmation.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Navigation.findNavController(getActivity(), R.id.navHostFragment).navigate(R.id.action_sign_in_screen_to_teacher_profile_confirmation);
+                //Navigation.findNavController(getActivity(), R.id.navHostFragment).navigate(R.id.action_sign_in_screen_to_teacher_profile_confirmation);
             }
         });
 
