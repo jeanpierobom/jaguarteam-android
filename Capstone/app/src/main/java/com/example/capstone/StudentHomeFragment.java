@@ -42,23 +42,20 @@ public class StudentHomeFragment extends Fragment {
     public View onCreateView(@NonNull final LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         final View view = inflater.inflate(R.layout.student_home_layout,container,false);
 
+        ((MainActivity)getActivity()).showBottomNavigation();
+
         searchButton = view.findViewById(R.id.home_search_button);
         searchResults = view.findViewById(R.id.home_search_results);
         languagesDropDown = view.findViewById(R.id.language);
         locationInput = view.findViewById(R.id.location);
         teachers = new ArrayList<Teacher>();
-        searchResults.setOnItemClickListener(new AdapterView.OnItemClickListener() {
-            @Override
-            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-                Log.e("Position Clicked","value: " + id);
-            }
-        });
 
         searchResults.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-                Log.e("SHF Item Click Func","Event Called");
-                //Navigation.findNavController(getActivity(), R.id.navHostFragment).navigate(R.id.action_student_home_search_to_teacher_profile_confirmation);
+                //Log.e("SHF Item Click Func","Event Called");
+                ((MainActivity)getActivity()).setTeacher(teachers.get(position));
+                Navigation.findNavController(getActivity(), R.id.navHostFragment).navigate(R.id.action_student_home_search_to_teacher_profile_confirmation);
             }
         });
 
