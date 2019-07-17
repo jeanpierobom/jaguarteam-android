@@ -8,9 +8,10 @@
         android:padding="@dimen/viewPadding">
         <ImageView
             android:id="@+id/userAvatar"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
+            android:layout_width="200dp"
+            android:layout_height="200dp"
             android:layout_gravity="center"
+            android:scaleType="centerCrop"
             android:layout_marginBottom="@dimen/sectionSmallMargin"/>
         <TextView
             android:id="@+id/userName"

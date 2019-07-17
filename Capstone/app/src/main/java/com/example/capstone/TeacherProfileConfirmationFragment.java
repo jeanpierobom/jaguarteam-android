@@ -1,7 +1,9 @@
 package com.example.capstone;
 
+import android.content.DialogInterface;
 import android.location.Address;
 import android.location.Geocoder;
+import android.media.Image;
 import android.os.Bundle;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
@@ -17,6 +19,10 @@ import android.widget.ImageView;
 import android.widget.RatingBar;
 import android.widget.TextView;
 import android.widget.Toast;
+import androidx.appcompat.app.AlertDialog;
+import androidx.navigation.Navigation;
+
+import com.example.capstone.asynctasks.ImageDownloader;
 import com.google.android.gms.maps.CameraUpdateFactory;
 import com.google.android.gms.maps.GoogleMap;
 import com.google.android.gms.maps.MapView;
@@ -40,12 +46,23 @@ public class TeacherProfileConfirmationFragment extends Fragment implements OnMa
     ImageView userAvatar;
     RatingBar userRating;
     TextView userName, userDescription, classTime, classLanguage, classCost;
+    AlertDialog.Builder alert;
 
     @Nullable
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.teacher_profile_confirmation_layout, container, false);
+
         geocoder = new Geocoder(this.getActivity());
+
+        alert = new AlertDialog.Builder(this.getActivity());
+        alert.setTitle("Class confirmed!");
+        alert.setMessage("Your class has been successfully scheduled and the teacher will be notified soon.");
+        alert.setPositiveButton("OK",new DialogInterface.OnClickListener() {
+            public void onClick(DialogInterface dialog, int id) {
+                Navigation.findNavController(getActivity(),R.id.navHostFragment).navigate(R.id.action_teacher_profile_confirmation_to_student_home_search);
+            }
+        });
 
         findLocationButton = view.findViewById(R.id.findLocationButton);
         inputLocationName = view.findViewById(R.id.inputLocationName);
@@ -64,7 +81,9 @@ public class TeacherProfileConfirmationFragment extends Fragment implements OnMa
 
         // TODO: the following data should come from the database:
         // placeholder_avatar from https://pravatar.cc/
-        int avatar = R.drawable.placeholder_avatar;
+//        int avatar = R.drawable.placeholder_avatar;
+        ImageDownloader imgDownloader = new ImageDownloader(userAvatar, 3);
+        imgDownloader.execute("");
         String name = "Jean Coutu";
         String teacherType = "Community Teacher";
         String location = "Surrey, Canada";
@@ -74,7 +93,7 @@ public class TeacherProfileConfirmationFragment extends Fragment implements OnMa
         double cost = 15.00;
 
         // Populating UI
-        userAvatar.setImageResource(avatar);
+        // userAvatar.setImageResource(avatar);
         userName.setText(name);
         userDescription.setText(teacherType + " from " + location);
         userRating.setRating(rating);
@@ -95,7 +114,8 @@ public class TeacherProfileConfirmationFragment extends Fragment implements OnMa
         mMap = googleMap;
         // TODO: get this from the database?
         LatLng initialPosition = new LatLng(49.224206, -123.108453);
-        mSpot = mMap.addMarker(new MarkerOptions().position(initialPosition).title("Meeting Spot").draggable(true));
+        // Drag and drop doesn't work well with ScrollView, so I'm disabling it.
+        mSpot = mMap.addMarker(new MarkerOptions().position(initialPosition).title("Meeting Spot").draggable(false));
         mMap.moveCamera(CameraUpdateFactory.zoomTo(15));
 
         locationCoordinates[0] = mSpot.getPosition().latitude;
@@ -104,7 +124,8 @@ public class TeacherProfileConfirmationFragment extends Fragment implements OnMa
         moveCamera();
 
         mMap.setOnMarkerClickListener(this);
-        mMap.setOnMarkerDragListener(this);
+        // Drag and drop doesn't work well with ScrollView, so I'm disabling it.
+        // mMap.setOnMarkerDragListener(this);
     }
 
     public void moveCamera () {
@@ -155,10 +176,12 @@ public class TeacherProfileConfirmationFragment extends Fragment implements OnMa
 
     public void sendRequest (Double[] locationCoordinates, String locationName, String inputMessage) {
         // TODO: send data to database.
-        Toast.makeText(this.getActivity(), locationName + "\n" + locationCoordinates[0] + ", " + locationCoordinates[1] + "\n" + inputMessage, Toast.LENGTH_LONG).show();
+//        Toast.makeText(this.getActivity(), locationName + "\n" + locationCoordinates[0] + ", " + locationCoordinates[1] + "\n" + inputMessage, Toast.LENGTH_LONG).show();
         Log.d("To Database", "locationName: " + locationName);
         Log.d("To Database", "locationCoordinates: " + locationCoordinates[0] + ", " + locationCoordinates[1]);
         Log.d("To Database", "inputMessage: " + inputMessage);
+//        dialog.show();
+        alert.show();
     }
 
     @Override
