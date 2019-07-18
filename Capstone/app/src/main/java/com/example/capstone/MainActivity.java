@@ -25,6 +25,8 @@ import net.openid.appauth.TokenResponse;
 
 import org.json.JSONException;
 
+import java.util.List;
+
 public class MainActivity extends AppCompatActivity {
 
     private NavController navigator;
@@ -34,6 +36,8 @@ public class MainActivity extends AppCompatActivity {
     private static final String USED_INTENT = "USED_INTENT";
 
     private Teacher selectedTeacher;
+    private Availability selectedAvailability;
+    private List<String> selectedClassTypes;
     private View bottomNavigation;
     private View topTabs;
 
@@ -75,6 +79,20 @@ public class MainActivity extends AppCompatActivity {
 
     public Teacher getTeacher(){
         return selectedTeacher;
+    }
+
+    public void setAvailability(Availability a){
+        selectedAvailability = a;
+    }
+    public Availability getAvailability(){
+        return selectedAvailability;
+    }
+
+    public void setClassTypes(List<String> c){
+        selectedClassTypes = c;
+    }
+    public List<String> getClassTypes(){
+        return selectedClassTypes;
     }
     //OAuth
     @Override

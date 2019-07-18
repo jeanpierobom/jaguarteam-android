@@ -28,6 +28,11 @@
     <string name="teacher_card_placeholder">Placeholder</string>
     <string name="teacher_card_hourly_rate">Hourly Rate</string>
     <string name="teacher_card_distance">Distance</string>
+    <string name="to_teacher_profile" >To teacher Profile</string>
+    <string name="activities_label">Activities</string>
+    <string name="availability_label">Availability</string>
+    <string name="book_class_button_label">Book Class</string>
+
 
     <string name="nav_home">home</string>
     <string name="nav_chat">chat</string>

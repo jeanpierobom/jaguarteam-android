@@ -1,0 +1,314 @@
+package com.example.capstone;
+
+import android.content.DialogInterface;
+import android.location.Address;
+import android.location.Geocoder;
+import android.os.Bundle;
+import android.util.JsonReader;
+import android.util.Log;
+import android.view.Gravity;
+import android.view.LayoutInflater;
+import android.view.View;
+import android.view.ViewGroup;
+import android.view.inputmethod.InputMethodManager;
+import android.widget.Button;
+import android.widget.EditText;
+import android.widget.FrameLayout;
+import android.widget.ImageView;
+import android.widget.LinearLayout;
+import android.widget.ListView;
+import android.widget.RatingBar;
+import android.widget.RelativeLayout;
+import android.widget.TextView;
+
+import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
+import androidx.appcompat.app.AlertDialog;
+import androidx.fragment.app.Fragment;
+import androidx.navigation.Navigation;
+
+import com.example.capstone.asynctasks.ImageDownloader;
+
+
+import java.util.ArrayList;
+import java.util.List;
+
+public class TeacherProfileFragment extends Fragment {
+
+    ImageView userAvatar;
+    RatingBar userRating;
+    TextView userName, userDescription, classTime, classLanguage, classCost;
+    AlertDialog.Builder alert;
+
+    List<TextView> activities = new ArrayList<TextView>();
+    List<TextView> availabilitiesTimeSlots = new ArrayList<TextView>();
+    List<TextView> availabilitiesDate = new ArrayList<TextView>();
+    Availability availabilityDateSelected;
+    String availabilityTimeSlotSelected;
+
+    @Nullable
+    @Override
+    public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
+        View view = inflater.inflate(R.layout.teacher_profile_layout, container, false);
+
+
+        //==========================================================================================
+        userAvatar = view.findViewById(R.id.userAvatar);
+        userName = view.findViewById(R.id.userName);
+        userDescription = view.findViewById(R.id.userDescription);
+        userRating = view.findViewById(R.id.userRating);
+        classTime = view.findViewById(R.id.classTime);
+        classLanguage = view.findViewById(R.id.classLanguage);
+        classCost = view.findViewById(R.id.classCost);
+
+
+        Teacher selectedTeacher = ((MainActivity)getActivity()).getTeacher();
+        Log.e("Retrieving Teacher:","Retrieved Teacher is: " + selectedTeacher.getName());
+
+
+//        for (String classType: selectedTeacher.getClassTypes()) {
+//            Log.e("Retrieving Teacher:","CLASS TYPES: " + classType);
+//        }
+//
+//        if(selectedTeacher.getAvailability() != null){
+//            for (Availability availability: selectedTeacher.getAvailability()) {
+//                Log.e("Retrieving Teacher:","Availability Date: " + availability.getDate());
+//                for (String timeslot : availability.getTimeSlots()) {
+//                    Log.e("Retrieving Teacher:","Availability TimeSlot: " + timeslot);
+//                }
+//            }
+//        }
+
+
+        // TODO: the following data should come from the database:
+        ImageDownloader imgDownloader = new ImageDownloader(userAvatar, selectedTeacher.getId());
+        imgDownloader.execute("");
+        String name = selectedTeacher.getName();
+        String teacherType = "Community Teacher";
+        String location = selectedTeacher.getCity();
+        int rating = 4;
+        String time = "3:00 PM - 4:00 PM Sat, Jun 3";
+        String language = selectedTeacher.getLanguage(0);
+        double cost = selectedTeacher.getHourlyRate();
+
+        // Populating UI
+        // userAvatar.setImageResource(avatar);
+        userName.setText(name);
+        userDescription.setText(teacherType + " from " + location);
+        userRating.setRating(rating);
+        classTime.setText(time);
+        classLanguage.setText(language);
+        classCost.setText("CA$ " + cost);
+
+        //==========================================================================================
+
+
+        loadActivities(view, selectedTeacher);
+        loadAvailabilities(view, selectedTeacher);
+        loadBookClass(view);
+
+        return view;
+
+    }
+
+    public void loadBookClass(View view){
+
+        Button btn = view.findViewById(R.id.button_book_class);
+
+        btn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+
+                List<String> activitiesToBook = new ArrayList<String>();
+
+                for (TextView activity : activities ) {
+                    if(activity.getTag().equals("SELECTED")){
+                        activitiesToBook.add(activity.getText().toString());
+                    }
+                }
+
+                ((MainActivity)getActivity()).setClassTypes(activitiesToBook);
+                ((MainActivity)getActivity()).setAvailability(new Availability(availabilityDateSelected.getDate(), availabilityTimeSlotSelected));
+                Navigation.findNavController(getActivity(), R.id.navHostFragment).navigate(R.id.action_student_home_search_to_teacher_profile_confirmation);
+
+            }
+        });
+
+    }
+
+
+    public void loadActivities(View view, Teacher teacher){
+
+        FrameLayout frame = view.findViewById(R.id.activities_box);
+        int count = 0;
+
+        LinearLayout linearLayoutActivities = new LinearLayout(frame.getContext());
+        frame.addView(linearLayoutActivities);
+
+        for (String classType : teacher.getClassTypes()) {
+
+            count++;
+
+            if(count > 3){
+                count = 1;
+                linearLayoutActivities = new LinearLayout(frame.getContext());
+                frame.addView(linearLayoutActivities);
+            }
+
+            TextView newClassType = new TextView(linearLayoutActivities.getContext());
+            newClassType.setText(classType);
+
+            LinearLayout.LayoutParams params = new LinearLayout.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.MATCH_PARENT);
+
+            params.weight = 1;
+            params.gravity = Gravity.CENTER;
+            params.leftMargin = 10;
+            params.rightMargin = 10;
+            params.topMargin = 10;
+            params.bottomMargin = 10;
+
+            newClassType.setLayoutParams(params);
+            newClassType.setGravity(Gravity.CENTER);
+
+            newClassType.setBackgroundColor(getResources().getColor(R.color.background_color));
+            newClassType.setTextColor(getResources().getColor(R.color.buttonPrimaryBackgroundColor));
+            newClassType.setTag("NOT SELECTED");
+
+            activities.add(newClassType);
+
+            newClassType.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+
+                    if(v.getTag().equals("SELECTED")){
+                        v.setBackgroundColor(getResources().getColor(R.color.background_color));
+                        ((TextView)v).setTextColor(getResources().getColor(R.color.buttonPrimaryBackgroundColor));
+                        v.setTag("NOT SELECTED");
+                    }else{
+                        v.setTag("SELECTED");
+                        v.setBackgroundColor(getResources().getColor(R.color.buttonPrimaryBackgroundColor));
+                        ((TextView)v).setTextColor(getResources().getColor(R.color.buttonPrimaryTextColor));
+                    }
+                }
+            });
+
+            linearLayoutActivities.addView(newClassType);
+
+        }
+    }
+
+
+    public void loadAvailabilities(final View view, final Teacher teacher){
+        LinearLayout frame = view.findViewById(R.id.availabilities_dates);
+
+        for (Availability availability : teacher.getAvailability()) {
+
+            TextView newClassType = new TextView(frame.getContext());
+            newClassType.setText(availability.getDate());
+
+            LinearLayout.LayoutParams params = new LinearLayout.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.MATCH_PARENT);
+
+            params.weight = 1;
+            params.gravity = Gravity.CENTER;
+            params.leftMargin = 5;
+            params.rightMargin = 5;
+            params.topMargin = 10;
+            params.bottomMargin = 10;
+
+            newClassType.setLayoutParams(params);
+            newClassType.setGravity(Gravity.CENTER);
+
+            newClassType.setBackgroundColor(getResources().getColor(R.color.buttonPrimaryBackgroundColor));
+            newClassType.setTextColor(getResources().getColor(R.color.buttonPrimaryTextColor));
+
+            availabilitiesDate.add(newClassType);
+
+            newClassType.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+
+                    for (TextView availabilityDate : availabilitiesDate) {
+                        availabilityDate.setBackgroundColor(getResources().getColor(R.color.buttonPrimaryBackgroundColor));
+                        ((TextView) availabilityDate).setTextColor(getResources().getColor(R.color.buttonPrimaryTextColor));
+                    }
+
+                    v.setBackgroundColor(getResources().getColor(R.color.background_color));
+                    ((TextView) v).setTextColor(getResources().getColor(R.color.buttonPrimaryBackgroundColor));
+
+                    for (Availability availabilityAux : teacher.getAvailability()) {
+                        if(availabilityAux.getDate().equals(((TextView) v).getText())){
+                            availabilityDateSelected = availabilityAux;
+                        }
+                    }
+
+                    loadAvailabilitiesTimeSlots(view);
+
+                }
+            });
+
+            frame.addView(newClassType);
+        }
+    }
+
+
+    public void loadAvailabilitiesTimeSlots(View view){
+
+        LinearLayout frame = view.findViewById(R.id.availabilities_box_timeslots);
+        frame.removeAllViews();
+        int count = 0;
+
+        LinearLayout linearLayoutActivities = new LinearLayout(frame.getContext());
+        frame.addView(linearLayoutActivities);
+
+        for (String timeSlot : availabilityDateSelected.getTimeSlots()) {
+
+            count++;
+
+            if (count > 3) {
+                count = 1;
+                linearLayoutActivities = new LinearLayout(frame.getContext());
+                frame.addView(linearLayoutActivities);
+            }
+
+            TextView newClassType = new TextView(linearLayoutActivities.getContext());
+            newClassType.setText(timeSlot);
+
+            LinearLayout.LayoutParams params = new LinearLayout.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.MATCH_PARENT);
+
+            params.weight = 1;
+            params.gravity = Gravity.CENTER;
+            params.leftMargin = 10;
+            params.rightMargin = 10;
+            params.topMargin = 10;
+            params.bottomMargin = 10;
+
+            newClassType.setLayoutParams(params);
+            newClassType.setGravity(Gravity.CENTER);
+
+            newClassType.setBackgroundColor(getResources().getColor(R.color.background_color));
+            newClassType.setTextColor(getResources().getColor(R.color.buttonPrimaryBackgroundColor));
+            newClassType.setTag("NOT SELECTED");
+
+            availabilitiesTimeSlots.add(newClassType);
+
+            newClassType.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+
+                    for (TextView timeSlot : availabilitiesTimeSlots) {
+                        timeSlot.setBackgroundColor(getResources().getColor(R.color.background_color));
+                        ((TextView) timeSlot).setTextColor(getResources().getColor(R.color.buttonPrimaryBackgroundColor));
+                    }
+
+                    v.setBackgroundColor(getResources().getColor(R.color.buttonPrimaryBackgroundColor));
+                    ((TextView) v).setTextColor(getResources().getColor(R.color.buttonPrimaryTextColor));
+
+                    availabilityTimeSlotSelected = ((TextView) v).getText().toString();
+                }
+            });
+
+            linearLayoutActivities.addView(newClassType);
+        }
+    }
+
+}

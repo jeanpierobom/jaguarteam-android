@@ -56,7 +56,7 @@ public class StudentHomeFragment extends Fragment {
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
                 //Log.e("SHF Item Click Func","Event Called");
                 ((MainActivity)getActivity()).setTeacher(teachers.get(position));
-                Navigation.findNavController(getActivity(), R.id.navHostFragment).navigate(R.id.action_student_home_search_to_teacher_profile_confirmation);
+                Navigation.findNavController(getActivity(), R.id.navHostFragment).navigate(R.id.action_student_home_search_to_teacher_profile);
             }
         });
 
@@ -109,6 +109,7 @@ public class StudentHomeFragment extends Fragment {
                         getActivity().runOnUiThread(new Runnable() {
                             @Override
                             public void run() {
+
                                 teacherCardAdapter = new TeacherCardAdapter(getContext(),teachers);
                                 searchResults.setAdapter(teacherCardAdapter);
                                 Log.e("teacherBuilder","The function reached this point");
