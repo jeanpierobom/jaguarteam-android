@@ -52,8 +52,33 @@ public class APICaller {
         }
     }
 
-    public static void Post(String URL, String JsonObject){
-
+    public static void Post(String URL, final String jsonObject, final APICallBack call){
+        try{
+            final java.net.URL url = new URL(URL);
+            AsyncTask.execute(new Runnable() {
+                @Override
+                public void run() {
+                    try {
+                        HttpsURLConnection myConnection = (HttpsURLConnection) url.openConnection();
+                        myConnection.setRequestMethod("POST");
+                        myConnection.setDoOutput(true);
+                        myConnection.getOutputStream().write(jsonObject.getBytes());
+                        int responseCode = myConnection.getResponseCode();
+                        if(responseCode == 200){
+                            Log.e("ASYNC SUCCESS:", "POST Successful");
+                        }
+                        else{
+                            Log.e("ASYNC ERROR", "Response from server was: " + String.valueOf(responseCode));
+                        }
+                        myConnection.disconnect();
+                    }catch (IOException e) {
+                        e.printStackTrace();
+                    }
+                }
+            });
+        }catch (MalformedURLException e) {
+            e.printStackTrace();
+        }
     }
 
 }

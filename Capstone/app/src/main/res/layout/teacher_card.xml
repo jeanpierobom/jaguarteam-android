@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<android.support.v7.widget.CardView
+<androidx.cardview.widget.CardView
     xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:id="@+id/teacher_card"
@@ -15,13 +15,14 @@
         android:rowCount="4">
 
         <ImageView
+            android:id="@+id/cardImage"
             android:layout_row="0"
             android:layout_rowSpan="2"
             android:layout_column="0"
             app:srcCompat="@mipmap/ic_launcher" />
 
         <TextView
-            android:id="@+id/availability_date"
+            android:id="@+id/name"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_row="0"
@@ -89,6 +90,7 @@
             android:id="@+id/rating"
             android:layout_width="wrap_content"
             android:layout_height="match_parent"
+            style="?android:attr/ratingBarStyleSmall"
             android:layout_row="3"
             android:layout_column="3"
             android:numStars="5" />
@@ -96,4 +98,4 @@
 
     </GridLayout>
 
-</android.support.v7.widget.CardView>
+</androidx.cardview.widget.CardView>

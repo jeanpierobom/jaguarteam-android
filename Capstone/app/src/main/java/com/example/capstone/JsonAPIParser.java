@@ -3,19 +3,23 @@ package com.example.capstone;
 import android.util.JsonReader;
 import android.util.JsonToken;
 import android.util.Log;
+import android.util.Pair;
 
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.Map;
 
 public class JsonAPIParser {
 
-    public static ArrayList<String> ParseLanguageRequest(JsonReader reader){
-        ArrayList<String> LanguageList = new ArrayList<String>();
-
+    public static Map<String, Integer> ParseLanguageRequest(JsonReader reader){
+        Map<String, Integer> languageList = new HashMap<String, Integer>();
+        Pair<String, Integer> language;
         try{
             reader.beginArray();
             while(reader.hasNext()){
-                LanguageList.add(readLanguageObject(reader));
+                language = readLanguageObject(reader);
+                languageList.put(language.first,language.second);
             }
             reader.endArray();
             reader.close();
@@ -23,16 +27,17 @@ public class JsonAPIParser {
             e.printStackTrace();
         }
 
-        return LanguageList;
+        return languageList;
     }
 
-    public static ArrayList<String> ParseCityRequest(JsonReader reader){
-        ArrayList<String> cities = new ArrayList<>();
-
+    public static Map<String,Integer> ParseCityRequest(JsonReader reader){
+        Map<String,Integer> cities = new HashMap<String, Integer>();
+        Pair<Integer,String> city;
         try {
             reader.beginArray();
             while(reader.hasNext()){
-
+                city = readCityObject(reader);
+                cities.put(city.second,city.first);
             }
             reader.endArray();
         } catch (IOException e) {
@@ -59,25 +64,10 @@ public class JsonAPIParser {
         return teachers;
     }
 
-    public static Teacher ParseTeacherProfileRequest(JsonReader reader){
-        Teacher teacher = new Teacher();
 
-//        try {
-//            reader.beginObject();
-//            while(reader.hasNext()){
-                teacher = readTeacherObject(reader);
-//            }
-//            reader.endObject();
-//            reader.close();
-//        } catch (IOException e) {
-//            e.printStackTrace();
-//        }
-
-        return teacher;
-    }
-
-    private static String readCityObject(JsonReader reader){
+    private static Pair<Integer,String> readCityObject(JsonReader reader){
         String city = "";
+        int id = -1;
         String name;
         try{
             reader.beginObject();
@@ -86,17 +76,24 @@ public class JsonAPIParser {
                 if(name.equals("name")){
                     city = reader.nextString();
                 }
+                else if(name.equals("id")){
+                    id = reader.nextInt();
+                }
+                else{
+                    reader.skipValue();
+                }
             }
             reader.endObject();
         } catch (IOException e) {
             e.printStackTrace();
         }
 
-        return city;
+        return new Pair<>(id,city);
     }
 
-    private static String readLanguageObject(JsonReader reader){
+    private static Pair<String,Integer> readLanguageObject(JsonReader reader){
         String language = "";
+        int id = -1;
         String name;
         try {
             reader.beginObject();
@@ -104,6 +101,9 @@ public class JsonAPIParser {
                 name = reader.nextName();
                 if(name.equals("name")) {
                     language = reader.nextString();
+                }
+                else if(name.equals("id")){
+                    id = reader.nextInt();
                 }
                 else {
                     reader.skipValue();
@@ -113,7 +113,7 @@ public class JsonAPIParser {
         } catch (IOException e) {
             e.printStackTrace();
         }
-        return language;
+        return new Pair<String,Integer>(language,id);
     }
 
     private static String readClassTypeObject(JsonReader reader){
@@ -183,7 +183,7 @@ public class JsonAPIParser {
         String bio = "";
         ArrayList<String> classes = new ArrayList<String>();
         int countryId = -1;
-        ArrayList<String> languages = new ArrayList<String>();
+        Map<String,Integer> languages = new HashMap<String, Integer>();
         float hourRate = -1;
         float distance = 0;
         float rating = 0;
@@ -191,6 +191,7 @@ public class JsonAPIParser {
         ArrayList<Availability> availability = new ArrayList<Availability>();
 
         String key;
+        Pair<String,Integer> aux;
 
         try {
             reader.beginObject();
@@ -236,12 +237,13 @@ public class JsonAPIParser {
                     if(reader.peek() == JsonToken.BEGIN_ARRAY){
                         reader.beginArray();
                         while(reader.hasNext()){
-                            languages.add(readLanguageObject(reader));
+                            aux = readLanguageObject(reader);
+                            languages.put(aux.first,aux.second);
                         }
                         reader.endArray();
                     }
                     else if(reader.peek() == JsonToken.STRING) {
-                        languages.add(reader.nextString());
+                        languages.put(reader.nextString(),0);
                         Log.e("TEACHER PARSER", "string content: " + languages.get(0));
                     }else if(reader.peek()==JsonToken.NULL){
                         reader.skipValue();
@@ -272,7 +274,14 @@ public class JsonAPIParser {
         } catch (IOException e) {
             e.printStackTrace();
         }
-        return new Teacher(id,name,email,bio,city,classes.toArray(new String[0]),countryId,languages.toArray(new String[0]),hourRate,distance,rating,ratings.toArray(new Rating[0]), availability);
+
+        String[] tempLanguages = new String[languages.size()];
+        int cont = 0;
+        for(Map.Entry<String,Integer> entry: languages.entrySet()){
+            tempLanguages[cont++] = entry.getKey();
+        }
+
+        return new Teacher(id,name,email,bio,city,classes.toArray(new String[0]),countryId,tempLanguages,hourRate,distance,rating,ratings.toArray(new Rating[0]), availability);
     }
 
     private static Rating readRatingObject(JsonReader reader){

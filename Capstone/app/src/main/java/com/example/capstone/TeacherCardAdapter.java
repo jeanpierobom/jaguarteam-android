@@ -1,13 +1,17 @@
 package com.example.capstone;
 
 import android.content.Context;
-import android.support.annotation.NonNull;
-import android.support.annotation.Nullable;
+import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
+import android.widget.EditText;
+import android.widget.ImageView;
 import android.widget.TextView;
+
+import com.example.capstone.asynctasks.ImageDownloader;
 
 import java.util.ArrayList;
 
@@ -31,9 +35,16 @@ public class TeacherCardAdapter extends ArrayAdapter<Teacher> {
             teacherCard = LayoutInflater.from(this.context).inflate(R.layout.teacher_card,parent,false);
         }
 
-        Teacher currentTeacher = teachers.get(position);
+        ImageView image = teacherCard.findViewById(R.id.cardImage);
 
-        ((TextView)teacherCard.findViewById(R.id.availability_date)).setText(currentTeacher.getName());
+
+        Teacher currentTeacher = teachers.get(position);
+        ImageDownloader img = new ImageDownloader(image,currentTeacher.getId());
+        img.execute("");
+        image.getLayoutParams().height = 150;
+            image.getLayoutParams().width= 100;
+        image.requestLayout();
+        ((TextView)teacherCard.findViewById(R.id.name)).setText(currentTeacher.getName());
         ((TextView)teacherCard.findViewById(R.id.languages)).setText(currentTeacher.getLanguage(0));
         ((TextView)teacherCard.findViewById(R.id.distance)).setText(String.valueOf(currentTeacher.getDistance()));
         ((TextView)teacherCard.findViewById(R.id.hourly_rate)).setText(String.valueOf(currentTeacher.getHourlyRate()));

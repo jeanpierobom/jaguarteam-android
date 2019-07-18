@@ -26,6 +26,12 @@ public class Availability {
         this.name = name;
     }
 
+    public Availability(String date, String timeSlot){
+        this.date = date;
+        this.timeSlots = new ArrayList<>();
+        this.timeSlots.add(timeSlot);
+    }
+
     public int getId(){return this.id;}
     public String getName(){return this.name;}
 

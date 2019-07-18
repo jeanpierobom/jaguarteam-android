@@ -16,13 +16,19 @@
             app:destination="@+id/sign_up_screen" />
         <action
             android:id="@+id/action_sign_in_screen_to_student_home_search"
-            app:destination="@id/student_home_search" />
+            app:destination="@id/student_home_search"
+            />
+            <!--<action-->
+            <!--android:id="@+id/action_sign_in_screen_to_student_home_search"-->
+            <!--app:destination="@id/teacher_profile_confirmation"-->
+        <!--/>-->
         <action
             android:id="@+id/action_sign_in_screen_to_teacher_profile_confirmation"
             app:destination="@id/teacher_profile_confirmation" />
         <action
             android:id="@+id/action_sign_in_screen_to_teacher_profile"
             app:destination="@id/teacher_profile" />
+
     </fragment>
 
     <fragment
@@ -30,7 +36,11 @@
         android:name="com.example.capstone.TeacherProfileFragment"
         android:label="Teacher Profile"
         tools:layout="@layout/teacher_profile_layout"
-        ></fragment>
+        >
+        <action
+            android:id="@+id/action_student_home_search_to_teacher_profile_confirmation"
+            app:destination="@id/teacher_profile_confirmation" />
+    </fragment>
 
     <fragment
         android:id="@+id/sign_up_screen"
@@ -44,12 +54,23 @@
         android:name="com.example.capstone.StudentHomeFragment"
         android:label="Student Home Search"
         tools:layout="@layout/student_home_layout"
-        ></fragment>
+        >
+        <action
+            android:id="@+id/action_student_home_search_to_teacher_profile_confirmation"
+            app:destination="@id/teacher_profile_confirmation" />
+        <action
+            android:id="@+id/action_student_home_search_to_teacher_profile"
+            app:destination="@id/teacher_profile" />
+    </fragment>
 
     <fragment
         android:id="@+id/teacher_profile_confirmation"
         android:name="com.example.capstone.TeacherProfileConfirmationFragment"
         android:label="Teacher Profile Confirmation"
         tools:layout="@layout/teacher_profile_confirmation_layout"
-        ></fragment>
+        >
+        <action
+            android:id="@+id/action_teacher_profile_confirmation_to_student_home_search"
+            app:destination="@id/student_home_search" />
+    </fragment>
 </navigation>
