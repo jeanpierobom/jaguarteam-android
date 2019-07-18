@@ -97,8 +97,8 @@ public class MainActivity extends AppCompatActivity {
     mAuthorize.setOnClickListener(new AuthorizeListener());
 
     //Test image
-//    ImageDownloader downloader = new ImageDownloader(mImageTest,1);
-//    downloader.execute("");
+    ImageDownloader downloader = new ImageDownloader(mImageTest,1);
+    downloader.execute("");
   }
 
   private void enablePostAuthorizationFlows() {
