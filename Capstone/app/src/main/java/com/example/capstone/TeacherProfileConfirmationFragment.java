@@ -79,18 +79,20 @@ public class TeacherProfileConfirmationFragment extends Fragment implements OnMa
         findLocationButton.setOnClickListener(this);
         confirmButton.setOnClickListener(this);
 
+        Teacher selectedTeacher = ((MainActivity)getActivity()).getTeacher();
+        Log.e("Retrieving Teacher:","Retrieved Teacher is: " + selectedTeacher.getName());
         // TODO: the following data should come from the database:
         // placeholder_avatar from https://pravatar.cc/
 //        int avatar = R.drawable.placeholder_avatar;
-        ImageDownloader imgDownloader = new ImageDownloader(userAvatar, 3);
+        ImageDownloader imgDownloader = new ImageDownloader(userAvatar, selectedTeacher.getId());
         imgDownloader.execute("");
-        String name = "Jean Coutu";
+        String name = selectedTeacher.getName();
         String teacherType = "Community Teacher";
-        String location = "Surrey, Canada";
+        String location = selectedTeacher.getCity();
         int rating = 4;
         String time = "3:00 PM - 4:00 PM Sat, Jun 3";
-        String language = "English";
-        double cost = 15.00;
+        String language = selectedTeacher.getLanguage(0);
+        double cost = selectedTeacher.getHourlyRate();
 
         // Populating UI
         // userAvatar.setImageResource(avatar);

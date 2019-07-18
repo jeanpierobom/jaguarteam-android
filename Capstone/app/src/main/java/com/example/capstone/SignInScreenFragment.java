@@ -46,6 +46,7 @@ public class SignInScreenFragment extends Fragment {
         signUpButton = view.findViewById(R.id.to_sign_up);
         signInGoogleButton = view.findViewById(R.id.sign_in_google_button);
         signInButton = view.findViewById(R.id.sign_in_button);
+        ((MainActivity)getActivity()).hideBottomNavigation();
 
         TextView textView = (TextView) signInGoogleButton.getChildAt(0);
         textView.setText("Sign In With Google");

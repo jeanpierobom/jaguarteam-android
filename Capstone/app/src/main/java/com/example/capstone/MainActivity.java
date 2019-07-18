@@ -7,6 +7,7 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.text.TextUtils;
 import android.util.Log;
+import android.view.View;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
@@ -31,6 +32,10 @@ public class MainActivity extends AppCompatActivity {
     private static final String SHARED_PREFERENCES_NAME = "AuthStatePreference";
     private static final String AUTH_STATE = "AUTH_STATE";
     private static final String USED_INTENT = "USED_INTENT";
+
+    private Teacher selectedTeacher;
+    private View bottomNavigation;
+
     MainApplication mMainApplication;
     AuthState mAuthState;
 
@@ -38,6 +43,7 @@ public class MainActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+        bottomNavigation = findViewById(R.id.nav_bottom_view);
     }
 
     @Override
@@ -49,6 +55,21 @@ public class MainActivity extends AppCompatActivity {
         return navigator;
     }
 
+    public void hideBottomNavigation(){
+        bottomNavigation.setVisibility(View.GONE);
+    }
+
+    public void showBottomNavigation(){
+        bottomNavigation.setVisibility(View.VISIBLE);
+    }
+
+    public void setTeacher(Teacher t){
+        selectedTeacher = t;
+    }
+
+    public Teacher getTeacher(){
+        return selectedTeacher;
+    }
     //OAuth
     @Override
     protected void onNewIntent(Intent intent) {
