@@ -18,10 +18,28 @@
             android:id="@+id/action_sign_in_screen_to_student_home_search"
             app:destination="@id/student_home_search"
             />
-        <!--<action-->
+            <!--<action-->
             <!--android:id="@+id/action_sign_in_screen_to_student_home_search"-->
             <!--app:destination="@id/teacher_profile_confirmation"-->
-            <!--/>-->
+        <!--/>-->
+        <action
+            android:id="@+id/action_sign_in_screen_to_teacher_profile_confirmation"
+            app:destination="@id/teacher_profile_confirmation" />
+        <action
+            android:id="@+id/action_sign_in_screen_to_teacher_profile"
+            app:destination="@id/teacher_profile" />
+
+    </fragment>
+
+    <fragment
+        android:id="@+id/teacher_profile"
+        android:name="com.example.capstone.TeacherProfileFragment"
+        android:label="Teacher Profile"
+        tools:layout="@layout/teacher_profile_layout"
+        >
+        <action
+            android:id="@+id/action_student_home_search_to_teacher_profile_confirmation"
+            app:destination="@id/teacher_profile_confirmation" />
     </fragment>
 
     <fragment
@@ -40,6 +58,9 @@
         <action
             android:id="@+id/action_student_home_search_to_teacher_profile_confirmation"
             app:destination="@id/teacher_profile_confirmation" />
+        <action
+            android:id="@+id/action_student_home_search_to_teacher_profile"
+            app:destination="@id/teacher_profile" />
     </fragment>
 
     <fragment

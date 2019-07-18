@@ -105,12 +105,6 @@
             android:layout_width="1dp"
             android:layout_height="20dp" />
 
-        <!--<Button-->
-            <!--android:id="@+id/to_teacher_profile_confirmation"-->
-            <!--android:layout_width="match_parent"-->
-            <!--android:layout_height="wrap_content"-->
-            <!--android:background="@color/colorPrimaryDark"-->
-            <!--android:text="@string/teacher_profile_confirmation_button" />-->
 
     </LinearLayout>
 </LinearLayout>

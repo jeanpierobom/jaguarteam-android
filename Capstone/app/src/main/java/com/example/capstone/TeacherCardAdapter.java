@@ -37,6 +37,7 @@ public class TeacherCardAdapter extends ArrayAdapter<Teacher> {
 
         ImageView image = teacherCard.findViewById(R.id.cardImage);
 
+
         Teacher currentTeacher = teachers.get(position);
         ImageDownloader img = new ImageDownloader(image,currentTeacher.getId());
         img.execute("");
