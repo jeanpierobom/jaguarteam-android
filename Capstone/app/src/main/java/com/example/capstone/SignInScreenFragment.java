@@ -35,6 +35,7 @@ public class SignInScreenFragment extends Fragment {
         View view = inflater.inflate(R.layout.sign_in_layout,container,false);
 
         ((MainActivity)getActivity()).hideBottomNavigation();
+        ((MainActivity)getActivity()).hideTopTabs();
 
         signUpButton = view.findViewById(R.id.to_sign_up);
         signInGoogleButton = view.findViewById(R.id.sign_in_google_button);

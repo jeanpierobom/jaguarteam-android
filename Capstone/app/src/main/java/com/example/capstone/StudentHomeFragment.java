@@ -43,6 +43,7 @@ public class StudentHomeFragment extends Fragment {
         final View view = inflater.inflate(R.layout.student_home_layout,container,false);
 
         ((MainActivity)getActivity()).showBottomNavigation();
+        ((MainActivity)getActivity()).showTopTabs();
 
         searchButton = view.findViewById(R.id.home_search_button);
         searchResults = view.findViewById(R.id.home_search_results);
