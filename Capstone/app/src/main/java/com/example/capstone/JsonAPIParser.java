@@ -30,6 +30,35 @@ public class JsonAPIParser {
         return languageList;
     }
 
+    public static LoginDTO ParseLoginRequest(JsonReader reader){
+
+        LoginDTO dto = new LoginDTO();
+
+        String fieldName;
+        try{
+            reader.beginObject();
+            while(reader.hasNext()){
+                fieldName = reader.nextName();
+
+                // Read the ID
+                if(fieldName.equals("id")) {
+                    dto.setId(reader.nextInt());
+                }
+
+                // Read the token
+                if(fieldName.equals("token")) {
+                    dto.setToken(reader.nextString());
+                }
+            }
+            reader.endObject();
+            reader.close();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+
+        return dto;
+    }
+
     public static Map<String,Integer> ParseCityRequest(JsonReader reader){
         Map<String,Integer> cities = new HashMap<String, Integer>();
         Pair<Integer,String> city;
