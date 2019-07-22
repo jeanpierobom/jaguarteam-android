@@ -9,13 +9,19 @@
     <TextView
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="@string/student_home_header"/>
+        android:layout_marginTop="@dimen/Standard_Margin"
+        android:layout_marginLeft="@dimen/Standard_Margin"
+        android:text="@string/student_home_header"
+        android:textSize="16pt"
+        android:textFontWeight="bold"/>
 
     <androidx.cardview.widget.CardView
         xmlns:card_view="http://schemas.android.com/apk/res-auto"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_margin="@dimen/Standard_Margin"
+        android:layout_marginLeft="@dimen/Standard_Margin"
+        android:layout_marginRight="@dimen/Standard_Margin"
+        android:layout_marginBottom="@dimen/Standard_Margin"
         android:padding="@dimen/card_padding">
 
         <LinearLayout
@@ -43,23 +49,24 @@
                 <Spinner
                     android:id="@+id/language"
                     android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
+                    android:layout_height="match_parent"
                     android:entries="@array/student_home_languages"
                     />
 
-                <EditText
-                    android:id="@+id/date"
-                    android:layout_width="wrap_content"
+                <TextView
+                    android:layout_width="0dp"
                     android:layout_height="wrap_content"
-                    android:inputType="date"
-                    android:text="@string/student_home_date" />
+                    android:layout_weight="1"
+                    android:text=""/>
 
                 <Button
                     android:id="@+id/home_search_button"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
+                    android:layout_weight="right"
+                    android:background="@color/colorPrimary"
                     android:text="@string/student_home_search"
-                    android:background="@color/colorPrimary"/>
+                    android:layout_gravity="right"/>
             </LinearLayout>
 
 
