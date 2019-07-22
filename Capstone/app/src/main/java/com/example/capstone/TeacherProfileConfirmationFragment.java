@@ -3,11 +3,11 @@ package com.example.capstone;
 import android.content.DialogInterface;
 import android.location.Address;
 import android.location.Geocoder;
-import android.media.Image;
 import android.os.Bundle;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
+import android.util.JsonReader;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -21,7 +21,6 @@ import android.widget.TextView;
 import android.widget.Toast;
 import androidx.appcompat.app.AlertDialog;
 import androidx.navigation.Navigation;
-
 import com.example.capstone.asynctasks.ImageDownloader;
 import com.google.android.gms.maps.CameraUpdateFactory;
 import com.google.android.gms.maps.GoogleMap;
@@ -31,7 +30,9 @@ import com.google.android.gms.maps.model.LatLng;
 import com.google.android.gms.maps.model.Marker;
 import com.google.android.gms.maps.model.MarkerOptions;
 import java.io.IOException;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 public class TeacherProfileConfirmationFragment extends Fragment implements OnMapReadyCallback, GoogleMap.OnMarkerClickListener, GoogleMap.OnMarkerDragListener, View.OnClickListener {
     private GoogleMap mMap;
@@ -47,6 +48,9 @@ public class TeacherProfileConfirmationFragment extends Fragment implements OnMa
     RatingBar userRating;
     TextView userName, userDescription, classTime, classLanguage, classCost;
     AlertDialog.Builder alert;
+    Teacher selectedTeacher;
+    Availability selectedAvailability;
+    String selectedClassType;
 
     @Nullable
     @Override
@@ -79,18 +83,24 @@ public class TeacherProfileConfirmationFragment extends Fragment implements OnMa
         findLocationButton.setOnClickListener(this);
         confirmButton.setOnClickListener(this);
 
-        Teacher selectedTeacher = ((MainActivity)getActivity()).getTeacher();
-        Log.e("Retrieving Teacher:","Retrieved Teacher is: " + selectedTeacher.getName());
+        selectedTeacher = ((MainActivity)getActivity()).getTeacher();
+        selectedAvailability = ((MainActivity)getActivity()).getAvailability();
+        selectedClassType = ((MainActivity)getActivity()).getClassTypes().get(0);
+
+        Log.d("POST_Date", selectedAvailability.getDate());
+        Log.d("POST_TimeSlots", selectedAvailability.getTimeSlots().toString());
+        Log.d("POST_ClassType", selectedClassType);
+        Log.d("POST_RetrievingTeacher:","Retrieved Teacher is: " + selectedTeacher.getName());
+
+
         // TODO: the following data should come from the database:
-        // placeholder_avatar from https://pravatar.cc/
-//        int avatar = R.drawable.placeholder_avatar;
         ImageDownloader imgDownloader = new ImageDownloader(userAvatar, selectedTeacher.getId());
         imgDownloader.execute("");
         String name = selectedTeacher.getName();
         String teacherType = "Community Teacher";
         String location = selectedTeacher.getCity();
         int rating = 4;
-        String time = "3:00 PM - 4:00 PM Sat, Jun 3";
+        String time = selectedAvailability.getTimeSlots().get(0) + ", " + selectedAvailability.getDate();
         String language = selectedTeacher.getLanguage(0);
         double cost = selectedTeacher.getHourlyRate();
 
@@ -116,7 +126,6 @@ public class TeacherProfileConfirmationFragment extends Fragment implements OnMa
         mMap = googleMap;
         // TODO: get this from the database?
         LatLng initialPosition = new LatLng(49.224206, -123.108453);
-        // Drag and drop doesn't work well with ScrollView, so I'm disabling it.
         mSpot = mMap.addMarker(new MarkerOptions().position(initialPosition).title("Meeting Spot").draggable(false));
         mMap.moveCamera(CameraUpdateFactory.zoomTo(15));
 
@@ -126,8 +135,6 @@ public class TeacherProfileConfirmationFragment extends Fragment implements OnMa
         moveCamera();
 
         mMap.setOnMarkerClickListener(this);
-        // Drag and drop doesn't work well with ScrollView, so I'm disabling it.
-        // mMap.setOnMarkerDragListener(this);
     }
 
     public void moveCamera () {
@@ -177,13 +184,43 @@ public class TeacherProfileConfirmationFragment extends Fragment implements OnMa
     }
 
     public void sendRequest (Double[] locationCoordinates, String locationName, String inputMessage) {
-        // TODO: send data to database.
-//        Toast.makeText(this.getActivity(), locationName + "\n" + locationCoordinates[0] + ", " + locationCoordinates[1] + "\n" + inputMessage, Toast.LENGTH_LONG).show();
-        Log.d("To Database", "locationName: " + locationName);
-        Log.d("To Database", "locationCoordinates: " + locationCoordinates[0] + ", " + locationCoordinates[1]);
-        Log.d("To Database", "inputMessage: " + inputMessage);
-//        dialog.show();
+
+        Map<String, String> params = new HashMap<String, String>();
+        params.put("studentId", "1");
+        params.put("teacherId", Integer.toString(selectedTeacher.getId()));
+        params.put("date", selectedAvailability.getDate());
+        params.put("startTime", selectedAvailability.getTimeSlots().get(0));
+        params.put("duration", "01:00");
+        params.put("classType", selectedClassType);
+        params.put("location", locationName);
+        params.put("locationLat", locationCoordinates[0].toString());
+        params.put("locationLong", locationCoordinates[1].toString());
+        params.put("price", Float.toString(selectedTeacher.getHourlyRate()));
+        params.put("message", inputMessage);
+
+        try {
+            APICaller.Post("class", params, new APICallBack() {
+                @Override
+                public void callBack(JsonReader jsonObject) {
+                    // TODO: parse response and log it?
+                    Log.d("TEST POST REQUEST","This is try");
+                    // TODO: error handling
+//                    if (we got an error) {
+//                        alert.setTitle("Error");
+//                        alert.setMessage("An exception has occurred..." );
+//                    }
+                }
+            });
+        } catch (Exception e) {
+            Log.d("TEST POST REQUEST","An exception has occurred: " + e);
+        } finally {
+            Log.d("TEST POST REQUEST","This is finally");
+        }
+
         alert.show();
+        Log.d("POST_Map", params.toString());
+
+
     }
 
     @Override
