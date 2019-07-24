@@ -87,7 +87,7 @@ public class TeacherProfileConfirmationFragment extends Fragment implements OnMa
         selectedTeacher = ((MainActivity)getActivity()).getTeacher();
         selectedAvailability = ((MainActivity)getActivity()).getAvailability();
         // Checking if selectedClassType is not null here.
-        selectedClassType = ((MainActivity)getActivity()).getClassTypes().size() == 0 ? "" : ((MainActivity)getActivity()).getClassTypes().get(0);
+        selectedClassType = (((MainActivity)getActivity()).getClassTypes() == null || ((MainActivity)getActivity()).getClassTypes().size() == 0) ? "" : ((MainActivity)getActivity()).getClassTypes().get(0);
 
         Log.d("POST_Date", selectedAvailability.getDate());
         Log.d("POST_TimeSlots", selectedAvailability.getTimeSlots().toString());
@@ -191,7 +191,7 @@ public class TeacherProfileConfirmationFragment extends Fragment implements OnMa
         // If the parameter type is String, it will default to the empty string so there is no need to check it here.
         // Note: selectedClassType has already been checked.
         String teacherIdParam = selectedTeacher.getId() == 0 ? "" : Integer.toString(selectedTeacher.getId());
-        String timeSlotParam = selectedAvailability.getTimeSlots().size() == 0 ? "" : selectedAvailability.getTimeSlots().get(0);
+        String timeSlotParam = (selectedAvailability.getTimeSlots() == null || selectedAvailability.getTimeSlots().size() == 0) ? "" : selectedAvailability.getTimeSlots().get(0);
         String locationLatParam = "", locationLongParam = "";
         if (locationCoordinates.length == 2) {
             locationLatParam = locationCoordinates[0].toString();
