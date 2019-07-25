@@ -45,6 +45,7 @@ public class TeacherProfileFragment extends Fragment {
     List<TextView> availabilitiesDate = new ArrayList<TextView>();
     Availability availabilityDateSelected;
     String availabilityTimeSlotSelected;
+    String activityToBook = "";
 
     @Nullable
     @Override
@@ -119,15 +120,15 @@ public class TeacherProfileFragment extends Fragment {
             @Override
             public void onClick(View v) {
 
-                List<String> activitiesToBook = new ArrayList<String>();
-
-                for (TextView activity : activities ) {
-                    if(activity.getTag().equals("SELECTED")){
-                        activitiesToBook.add(activity.getText().toString());
-                    }
-                }
-
-                ((MainActivity)getActivity()).setClassTypes(activitiesToBook);
+//                String activityToBook = "";
+//
+//                for (TextView activity : activities ) {
+//                    if(activity.getTag().equals("SELECTED")){
+//                        activityToBook = activity.getText().toString();
+//                    }
+//                }
+                Log.e("AAAAAAAAAAAAAAAAAAAAAAA","AAAAAAAAAAAAAAAAAAAAAAAAAA " + activityToBook);
+                ((MainActivity)getActivity()).setClassTypes(activityToBook);
                 ((MainActivity)getActivity()).setAvailability(new Availability(availabilityDateSelected.getDate(), availabilityTimeSlotSelected));
                 Navigation.findNavController(getActivity(), R.id.navHostFragment).navigate(R.id.action_student_home_search_to_teacher_profile_confirmation);
 
@@ -180,15 +181,30 @@ public class TeacherProfileFragment extends Fragment {
                 @Override
                 public void onClick(View v) {
 
-                    if(v.getTag().equals("SELECTED")){
-                        v.setBackgroundColor(getResources().getColor(R.color.background_color));
-                        ((TextView)v).setTextColor(getResources().getColor(R.color.buttonPrimaryBackgroundColor));
-                        v.setTag("NOT SELECTED");
-                    }else{
-                        v.setTag("SELECTED");
-                        v.setBackgroundColor(getResources().getColor(R.color.buttonPrimaryBackgroundColor));
-                        ((TextView)v).setTextColor(getResources().getColor(R.color.buttonPrimaryTextColor));
+//                    if(v.getTag().equals("SELECTED")){
+//                        v.setBackgroundColor(getResources().getColor(R.color.background_color));
+//                        ((TextView)v).setTextColor(getResources().getColor(R.color.buttonPrimaryBackgroundColor));
+//                        v.setTag("NOT SELECTED");
+//                    }else{
+//                        v.setTag("SELECTED");
+//                        v.setBackgroundColor(getResources().getColor(R.color.buttonPrimaryBackgroundColor));
+//                        ((TextView)v).setTextColor(getResources().getColor(R.color.buttonPrimaryTextColor));
+//                    }
+
+
+                    for (TextView activity :activities) {
+                        activity.setBackgroundColor(getResources().getColor(R.color.background_color));
+                        ((TextView)activity).setTextColor(getResources().getColor(R.color.buttonPrimaryBackgroundColor));
+                        activity.setTag("NOT SELECTED");
                     }
+
+                    v.setTag("SELECTED");
+                    v.setBackgroundColor(getResources().getColor(R.color.buttonPrimaryBackgroundColor));
+                    ((TextView)v).setTextColor(getResources().getColor(R.color.buttonPrimaryTextColor));
+                    activityToBook = ((TextView) v).getText().toString();
+
+
+
                 }
             });
 

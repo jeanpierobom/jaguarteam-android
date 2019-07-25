@@ -37,7 +37,7 @@ public class MainActivity extends AppCompatActivity {
 
     private Teacher selectedTeacher;
     private Availability selectedAvailability;
-    private List<String> selectedClassTypes;
+    private String selectedClassType;
     private View bottomNavigation;
 
     MainApplication mMainApplication;
@@ -82,11 +82,11 @@ public class MainActivity extends AppCompatActivity {
         return selectedAvailability;
     }
 
-    public void setClassTypes(List<String> c){
-        selectedClassTypes = c;
+    public void setClassTypes(String c){
+        selectedClassType = c;
     }
-    public List<String> getClassTypes(){
-        return selectedClassTypes;
+    public String getClassTypes(){
+        return selectedClassType;
     }
     //OAuth
     @Override
