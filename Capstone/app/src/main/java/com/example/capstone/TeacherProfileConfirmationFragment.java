@@ -87,7 +87,8 @@ public class TeacherProfileConfirmationFragment extends Fragment implements OnMa
         selectedTeacher = ((MainActivity)getActivity()).getTeacher();
         selectedAvailability = ((MainActivity)getActivity()).getAvailability();
         // Checking if selectedClassType is not null here.
-        selectedClassType = ((MainActivity)getActivity()).getClassTypes();
+
+        selectedClassType = (((MainActivity)getActivity()).getClassTypes() == null || ((MainActivity)getActivity()).getClassTypes().size() == 0) ? "" : ((MainActivity)getActivity()).getClassTypes().get(0);
 
         Log.d("POST_Date", selectedAvailability.getDate());
         Log.d("POST_TimeSlots", selectedAvailability.getTimeSlots().toString());
@@ -174,11 +175,13 @@ public class TeacherProfileConfirmationFragment extends Fragment implements OnMa
     }
 
     public void locationFromName (String userInputName) {
+        // Defining search scope/context
+        String searchContext = " Vancouver, BC, Canada";
         if (userInputName.equals("")) {
             userInputName = "4700 Kingsway, Burnaby, BC V5H 4N2"; // Placeholder address, for testing purposes.
         }
         try {
-            addresses = geocoder.getFromLocationName(userInputName, 1);
+            addresses = geocoder.getFromLocationName(userInputName + searchContext, 1);
             updateUI();
         } catch (IOException e) {
             e.printStackTrace();
@@ -191,7 +194,7 @@ public class TeacherProfileConfirmationFragment extends Fragment implements OnMa
         // If the parameter type is String, it will default to the empty string so there is no need to check it here.
         // Note: selectedClassType has already been checked.
         String teacherIdParam = selectedTeacher.getId() == 0 ? "" : Integer.toString(selectedTeacher.getId());
-        String timeSlotParam = selectedAvailability.getTimeSlots().size() == 0 ? "" : selectedAvailability.getTimeSlots().get(0);
+        String timeSlotParam = (selectedAvailability.getTimeSlots() == null || selectedAvailability.getTimeSlots().size() == 0) ? "" : selectedAvailability.getTimeSlots().get(0);
         String locationLatParam = "", locationLongParam = "";
         if (locationCoordinates.length == 2) {
             locationLatParam = locationCoordinates[0].toString();
@@ -214,6 +217,8 @@ public class TeacherProfileConfirmationFragment extends Fragment implements OnMa
         params.put("price", priceParam);
         params.put("message", inputMessage);
 
+        Log.d("POST_Map", params.toString());
+
         try {
             APICaller.Post("class", params, new APICallBack() {
                 @Override
@@ -234,9 +239,6 @@ public class TeacherProfileConfirmationFragment extends Fragment implements OnMa
         }
 
         alert.show();
-        Log.d("POST_Map", params.toString());
-
-
     }
 
     @Override
