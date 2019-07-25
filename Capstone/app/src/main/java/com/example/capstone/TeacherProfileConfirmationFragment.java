@@ -88,7 +88,7 @@ public class TeacherProfileConfirmationFragment extends Fragment implements OnMa
         selectedAvailability = ((MainActivity)getActivity()).getAvailability();
         // Checking if selectedClassType is not null here.
 
-        selectedClassType = (((MainActivity)getActivity()).getClassTypes() == null || ((MainActivity)getActivity()).getClassTypes().size() == 0) ? "" : ((MainActivity)getActivity()).getClassTypes().get(0);
+        selectedClassType = ((MainActivity)getActivity()).getClassTypes();
 
         Log.d("POST_Date", selectedAvailability.getDate());
         Log.d("POST_TimeSlots", selectedAvailability.getTimeSlots().toString());
