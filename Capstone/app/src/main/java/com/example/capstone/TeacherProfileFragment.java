@@ -67,19 +67,6 @@ public class TeacherProfileFragment extends Fragment {
         Log.e("Retrieving Teacher:","Retrieved Teacher is: " + selectedTeacher.getName());
 
 
-//        for (String classType: selectedTeacher.getClassTypes()) {
-//            Log.e("Retrieving Teacher:","CLASS TYPES: " + classType);
-//        }
-//
-//        if(selectedTeacher.getAvailability() != null){
-//            for (Availability availability: selectedTeacher.getAvailability()) {
-//                Log.e("Retrieving Teacher:","Availability Date: " + availability.getDate());
-//                for (String timeslot : availability.getTimeSlots()) {
-//                    Log.e("Retrieving Teacher:","Availability TimeSlot: " + timeslot);
-//                }
-//            }
-//        }
-
 
         // TODO: the following data should come from the database:
         ImageDownloader imgDownloader = new ImageDownloader(userAvatar, selectedTeacher.getId());
@@ -120,14 +107,6 @@ public class TeacherProfileFragment extends Fragment {
             @Override
             public void onClick(View v) {
 
-//                String activityToBook = "";
-//
-//                for (TextView activity : activities ) {
-//                    if(activity.getTag().equals("SELECTED")){
-//                        activityToBook = activity.getText().toString();
-//                    }
-//                }
-                Log.e("AAAAAAAAAAAAAAAAAAAAAAA","AAAAAAAAAAAAAAAAAAAAAAAAAA " + activityToBook);
                 ((MainActivity)getActivity()).setClassTypes(activityToBook);
                 ((MainActivity)getActivity()).setAvailability(new Availability(availabilityDateSelected.getDate(), availabilityTimeSlotSelected));
                 Navigation.findNavController(getActivity(), R.id.navHostFragment).navigate(R.id.action_student_home_search_to_teacher_profile_confirmation);
@@ -181,15 +160,6 @@ public class TeacherProfileFragment extends Fragment {
                 @Override
                 public void onClick(View v) {
 
-//                    if(v.getTag().equals("SELECTED")){
-//                        v.setBackgroundColor(getResources().getColor(R.color.background_color));
-//                        ((TextView)v).setTextColor(getResources().getColor(R.color.buttonPrimaryBackgroundColor));
-//                        v.setTag("NOT SELECTED");
-//                    }else{
-//                        v.setTag("SELECTED");
-//                        v.setBackgroundColor(getResources().getColor(R.color.buttonPrimaryBackgroundColor));
-//                        ((TextView)v).setTextColor(getResources().getColor(R.color.buttonPrimaryTextColor));
-//                    }
 
 
                     for (TextView activity :activities) {
