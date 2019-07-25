@@ -24,13 +24,18 @@ import android.widget.TextView;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AlertDialog;
+import androidx.core.content.ContextCompat;
 import androidx.fragment.app.Fragment;
 import androidx.navigation.Navigation;
 
 import com.example.capstone.asynctasks.ImageDownloader;
 
 
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Calendar;
+import java.util.Date;
 import java.util.List;
 
 public class TeacherProfileFragment extends Fragment {
@@ -94,6 +99,7 @@ public class TeacherProfileFragment extends Fragment {
         loadActivities(view, selectedTeacher);
         loadAvailabilities(view, selectedTeacher);
         loadBookClass(view);
+        availabilitiesDate.get(0).callOnClick();
 
         return view;
 
@@ -149,8 +155,13 @@ public class TeacherProfileFragment extends Fragment {
 
             newClassType.setLayoutParams(params);
             newClassType.setGravity(Gravity.CENTER);
+            newClassType.setPadding(20,20,20,20);
 
             newClassType.setBackgroundColor(getResources().getColor(R.color.background_color));
+
+//            newClassType.setBackground(R.drawable.textview_border);
+            newClassType.setBackgroundDrawable(ContextCompat.getDrawable(getContext(), R.drawable.textview_border));
+
             newClassType.setTextColor(getResources().getColor(R.color.buttonPrimaryBackgroundColor));
             newClassType.setTag("NOT SELECTED");
 
@@ -165,12 +176,14 @@ public class TeacherProfileFragment extends Fragment {
                     for (TextView activity :activities) {
                         activity.setBackgroundColor(getResources().getColor(R.color.background_color));
                         ((TextView)activity).setTextColor(getResources().getColor(R.color.buttonPrimaryBackgroundColor));
+                        activity.setBackgroundDrawable(ContextCompat.getDrawable(getContext(), R.drawable.textview_border));
                         activity.setTag("NOT SELECTED");
                     }
 
                     v.setTag("SELECTED");
                     v.setBackgroundColor(getResources().getColor(R.color.buttonPrimaryBackgroundColor));
                     ((TextView)v).setTextColor(getResources().getColor(R.color.buttonPrimaryTextColor));
+                    v.setBackgroundDrawable(ContextCompat.getDrawable(getContext(), R.drawable.textview_border_selected));
                     activityToBook = ((TextView) v).getText().toString();
 
 
@@ -183,6 +196,32 @@ public class TeacherProfileFragment extends Fragment {
         }
     }
 
+    public String parseDate(View view, String date){
+        String finalDate = "";
+
+        //2019-07-26
+
+        Date realDate = new Date();
+
+        try {
+            realDate = new SimpleDateFormat("yyyy-MM-dd").parse(date);
+        } catch (ParseException e) {
+            e.printStackTrace();
+        }
+
+        String year = new SimpleDateFormat("yyyy").format(realDate);
+        String dayOfTheWeek = new SimpleDateFormat("EE").format(realDate);
+        String month = new SimpleDateFormat("MMMM").format(realDate);
+        String day = new SimpleDateFormat("dd").format(realDate);
+
+        TextView availabilityDate = view.findViewById(R.id.availability_date);
+        availabilityDate.setText(month + ", " +year);
+
+        finalDate = dayOfTheWeek + "\n" + day;
+
+        return finalDate;
+    }
+
 
     public void loadAvailabilities(final View view, final Teacher teacher){
         LinearLayout frame = view.findViewById(R.id.availabilities_dates);
@@ -190,7 +229,10 @@ public class TeacherProfileFragment extends Fragment {
         for (Availability availability : teacher.getAvailability()) {
 
             TextView newClassType = new TextView(frame.getContext());
-            newClassType.setText(availability.getDate());
+//            newClassType.setText(availability.getDate());
+            newClassType.setTag(availability.getDate());
+
+            newClassType.setText(parseDate(view, availability.getDate()));
 
             LinearLayout.LayoutParams params = new LinearLayout.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.MATCH_PARENT);
 
@@ -220,9 +262,10 @@ public class TeacherProfileFragment extends Fragment {
 
                     v.setBackgroundColor(getResources().getColor(R.color.background_color));
                     ((TextView) v).setTextColor(getResources().getColor(R.color.buttonPrimaryBackgroundColor));
+                    v.setBackgroundDrawable(ContextCompat.getDrawable(getContext(), R.drawable.textview_border));
 
                     for (Availability availabilityAux : teacher.getAvailability()) {
-                        if(availabilityAux.getDate().equals(((TextView) v).getText())){
+                        if(availabilityAux.getDate().equals(((TextView) v).getTag())){
                             availabilityDateSelected = availabilityAux;
                         }
                     }
@@ -272,7 +315,11 @@ public class TeacherProfileFragment extends Fragment {
             newClassType.setGravity(Gravity.CENTER);
 
             newClassType.setBackgroundColor(getResources().getColor(R.color.background_color));
-            newClassType.setTextColor(getResources().getColor(R.color.buttonPrimaryBackgroundColor));
+//            newClassType.setTextColor(getResources().getColor(R.color.buttonPrimaryBackgroundColor));
+            newClassType.setTextColor(getResources().getColor(R.color.colorPrimaryDark));
+
+            newClassType.setBackgroundDrawable(ContextCompat.getDrawable(getContext(), R.drawable.textview_timeslot));
+
             newClassType.setTag("NOT SELECTED");
 
             availabilitiesTimeSlots.add(newClassType);
@@ -283,11 +330,13 @@ public class TeacherProfileFragment extends Fragment {
 
                     for (TextView timeSlot : availabilitiesTimeSlots) {
                         timeSlot.setBackgroundColor(getResources().getColor(R.color.background_color));
-                        ((TextView) timeSlot).setTextColor(getResources().getColor(R.color.buttonPrimaryBackgroundColor));
+                        ((TextView) timeSlot).setTextColor(getResources().getColor(R.color.colorPrimaryDark));
+                        timeSlot.setBackgroundDrawable(ContextCompat.getDrawable(getContext(), R.drawable.textview_timeslot));
                     }
 
                     v.setBackgroundColor(getResources().getColor(R.color.buttonPrimaryBackgroundColor));
                     ((TextView) v).setTextColor(getResources().getColor(R.color.buttonPrimaryTextColor));
+                    v.setBackgroundDrawable(ContextCompat.getDrawable(getContext(), R.drawable.textview_border_selected));
 
                     availabilityTimeSlotSelected = ((TextView) v).getText().toString();
                 }
