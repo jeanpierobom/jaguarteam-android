@@ -102,19 +102,12 @@
 
         </FrameLayout>
 
-        <TextView
-            android:id="@+id/availability_label"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="20dp"
-            android:text="@string/availability_label"
-            android:textSize="18sp"
-            android:textStyle="bold" />
-
         <FrameLayout
             android:id="@+id/availabilities_box"
             android:layout_width="match_parent"
-            android:layout_height="match_parent">
+            android:layout_height="match_parent"
+            android:layout_marginTop="20dp"
+            android:background="@color/background_color">
 
             <LinearLayout
                 android:layout_width="match_parent"
@@ -122,12 +115,35 @@
                 android:orientation="vertical">
 
                 <LinearLayout
-                    android:id="@+id/availabilities_dates"
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
-                    android:background="@color/buttonPrimaryBackgroundColor"
-                    android:orientation="horizontal">
+                    android:background="@drawable/textview_border_selected"
+                    android:orientation="vertical">
 
+                    <TextView
+                        android:id="@+id/availability_label"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:text="@string/availability_label"
+                        android:textColor="@color/background_color"
+                        android:textSize="18sp"
+                        android:textStyle="bold" />
+
+                    <TextView
+                        android:id="@+id/availability_date"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:gravity="center_horizontal|center_vertical"
+                        android:padding="10dp"
+                        android:textColor="@color/background_color" />
+
+                    <LinearLayout
+                        android:id="@+id/availabilities_dates"
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:orientation="horizontal">
+
+                    </LinearLayout>
                 </LinearLayout>
 
                 <LinearLayout
@@ -142,8 +158,9 @@
                     android:id="@+id/button_book_class"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_marginTop="20dp"
-                    android:background="@color/buttonPrimaryBackgroundColor"
+                    android:layout_marginLeft="20dp"
+                    android:layout_marginRight="20dp"
+                    android:background="@drawable/textview_border_selected"
                     android:text="@string/book_class_button_label"
                     android:textColor="@color/buttonPrimaryTextColor" />
             </LinearLayout>
