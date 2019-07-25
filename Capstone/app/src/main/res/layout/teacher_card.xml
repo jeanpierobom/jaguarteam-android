@@ -29,7 +29,7 @@
             android:layout_column="1"
             android:layout_columnSpan="2"
             android:text="@string/teacher_card_placeholder"
-            android:textSize="30sp"
+            android:textSize="20sp"
             android:textStyle="bold" />
 
         <TextView
@@ -52,14 +52,14 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_row="2"
-            android:layout_column="1"
+            android:layout_column="2"
             android:text="@string/teacher_card_hourly_rate" />
 
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_row="2"
-            android:layout_column="2"
+            android:layout_column="3"
             android:text="@string/teacher_card_distance" />
 
         <TextView
@@ -68,6 +68,7 @@
             android:layout_height="wrap_content"
             android:layout_row="3"
             android:layout_column="0"
+            android:layout_columnSpan="2"
             android:text="@string/teacher_card_placeholder" />
 
         <TextView
@@ -75,7 +76,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_row="3"
-            android:layout_column="1"
+            android:layout_column="2"
             android:text="@string/teacher_card_placeholder" />
 
         <TextView
@@ -83,7 +84,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_row="3"
-            android:layout_column="2"
+            android:layout_column="3"
             android:text="@string/teacher_card_placeholder" />
 
         <RatingBar
@@ -91,7 +92,7 @@
             android:layout_width="wrap_content"
             android:layout_height="match_parent"
             style="?android:attr/ratingBarStyleSmall"
-            android:layout_row="3"
+            android:layout_row="0"
             android:layout_column="3"
             android:numStars="5" />
 

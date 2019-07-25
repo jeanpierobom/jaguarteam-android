@@ -88,7 +88,7 @@ public class TeacherProfileConfirmationFragment extends Fragment implements OnMa
         selectedAvailability = ((MainActivity)getActivity()).getAvailability();
         // Checking if selectedClassType is not null here.
 
-        selectedClassType = (((MainActivity)getActivity()).getClassTypes() == null || ((MainActivity)getActivity()).getClassTypes().size() == 0) ? "" : ((MainActivity)getActivity()).getClassTypes().get(0);
+        selectedClassType = ((MainActivity)getActivity()).getClassTypes();
 
         Log.d("POST_Date", selectedAvailability.getDate());
         Log.d("POST_TimeSlots", selectedAvailability.getTimeSlots().toString());
@@ -102,7 +102,7 @@ public class TeacherProfileConfirmationFragment extends Fragment implements OnMa
         String name = selectedTeacher.getName();
         String teacherType = "Community Teacher";
         String location = selectedTeacher.getCity();
-        int rating = 4;
+        float rating = selectedTeacher.getRating();
         String time = selectedAvailability.getTimeSlots().get(0) + ", " + selectedAvailability.getDate();
         String language = selectedTeacher.getLanguage(0);
         double cost = selectedTeacher.getHourlyRate();

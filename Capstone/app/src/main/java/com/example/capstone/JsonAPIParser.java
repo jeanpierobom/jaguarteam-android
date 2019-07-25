@@ -216,6 +216,7 @@ public class JsonAPIParser {
         float hourRate = -1;
         float distance = 0;
         float rating = 0;
+        char teacherType = ' ';
         ArrayList<Rating> ratings = new ArrayList<Rating>();
         ArrayList<Availability> availability = new ArrayList<Availability>();
 
@@ -295,6 +296,10 @@ public class JsonAPIParser {
                         ratings.add(readRatingObject(reader));
                     }
                     reader.endArray();
+                }else if(key.equals("price")){
+                    hourRate = (float)reader.nextDouble();
+                }else if(key.equals("teacherType")){
+                    teacherType = reader.nextString().charAt(0);
                 }else{
                     reader.skipValue();
                 }
@@ -310,7 +315,7 @@ public class JsonAPIParser {
             tempLanguages[cont++] = entry.getKey();
         }
 
-        return new Teacher(id,name,email,bio,city,classes.toArray(new String[0]),countryId,tempLanguages,hourRate,distance,rating,ratings.toArray(new Rating[0]), availability);
+        return new Teacher(id,name,email,bio,city,classes.toArray(new String[0]),countryId,tempLanguages,hourRate,distance,rating,ratings.toArray(new Rating[0]), availability, teacherType);
     }
 
     private static Rating readRatingObject(JsonReader reader){

@@ -74,7 +74,7 @@ public class TeacherProfileFragment extends Fragment {
         String name = selectedTeacher.getName();
         String teacherType = "Community Teacher";
         String location = selectedTeacher.getCity();
-        int rating = 4;
+        float rating = selectedTeacher.getRating();
         String time = "3:00 PM - 4:00 PM Sat, Jun 3";
         String language = selectedTeacher.getLanguage(0);
         double cost = selectedTeacher.getHourlyRate();

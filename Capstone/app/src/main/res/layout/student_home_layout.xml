@@ -12,8 +12,7 @@
         android:layout_marginTop="@dimen/Standard_Margin"
         android:layout_marginLeft="@dimen/Standard_Margin"
         android:text="@string/student_home_header"
-        android:textSize="16pt"
-        android:textFontWeight="bold"/>
+        android:textSize="16pt"/>
 
     <androidx.cardview.widget.CardView
         xmlns:card_view="http://schemas.android.com/apk/res-auto"
@@ -22,12 +21,13 @@
         android:layout_marginLeft="@dimen/Standard_Margin"
         android:layout_marginRight="@dimen/Standard_Margin"
         android:layout_marginBottom="@dimen/Standard_Margin"
-        android:padding="@dimen/card_padding">
+        android:padding="@dimen/default_gap">
 
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:orientation="vertical">
+            android:orientation="vertical"
+            android:layout_margin="@dimen/default_gap">
 
             <com.google.android.material.textfield.TextInputLayout
                 android:layout_width="match_parent"
@@ -63,10 +63,8 @@
                     android:id="@+id/home_search_button"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_weight="right"
                     android:background="@color/colorPrimary"
-                    android:text="@string/student_home_search"
-                    android:layout_gravity="right"/>
+                    android:text="@string/student_home_search"/>
             </LinearLayout>
 
 
@@ -75,6 +73,7 @@
         </androidx.cardview.widget.CardView>
 
         <TextView
+            android:id="@+id/teachers_found"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:text=""/>
@@ -84,6 +83,8 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:orientation="vertical"
+        android:divider="@color/background_color"
+        android:dividerHeight="@dimen/Standard_Margin"
         android:padding="@dimen/card_padding">
 
 
