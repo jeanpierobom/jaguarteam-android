@@ -174,11 +174,13 @@ public class TeacherProfileConfirmationFragment extends Fragment implements OnMa
     }
 
     public void locationFromName (String userInputName) {
+        // Defining search scope/context
+        String searchContext = " Vancouver, BC, Canada";
         if (userInputName.equals("")) {
             userInputName = "4700 Kingsway, Burnaby, BC V5H 4N2"; // Placeholder address, for testing purposes.
         }
         try {
-            addresses = geocoder.getFromLocationName(userInputName, 1);
+            addresses = geocoder.getFromLocationName(userInputName + searchContext, 1);
             updateUI();
         } catch (IOException e) {
             e.printStackTrace();
@@ -214,6 +216,8 @@ public class TeacherProfileConfirmationFragment extends Fragment implements OnMa
         params.put("price", priceParam);
         params.put("message", inputMessage);
 
+        Log.d("POST_Map", params.toString());
+
         try {
             APICaller.Post("class", params, new APICallBack() {
                 @Override
@@ -234,9 +238,6 @@ public class TeacherProfileConfirmationFragment extends Fragment implements OnMa
         }
 
         alert.show();
-        Log.d("POST_Map", params.toString());
-
-
     }
 
     @Override
