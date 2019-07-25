@@ -8,5 +8,6 @@
     <color name="buttonPrimaryBackgroundColor">#FF6E61</color>
     <color name="white">#FFFFFF</color>
     <color name="blue">#0000FF</color>
+    <color name="unselected_text">#CCCCCC</color>
     <color name="softPrimary">#FFF1F0</color>
 </resources>

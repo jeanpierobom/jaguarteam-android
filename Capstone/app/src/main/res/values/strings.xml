@@ -36,6 +36,8 @@
 
     <string name="nav_home">home</string>
     <string name="nav_chat">chat</string>
+    <string name="nav_upcomming_classes">Upcomming Classes</string>
+    <string name="nav_previous_classes">previous classes</string>
 
     
     <string-array name="student_home_languages">

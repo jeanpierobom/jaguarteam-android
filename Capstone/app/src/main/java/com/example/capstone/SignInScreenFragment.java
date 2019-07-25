@@ -41,6 +41,10 @@ public class SignInScreenFragment extends Fragment {
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.sign_in_layout,container,false);
 
+
+        ((MainActivity)getActivity()).hideBottomNavigation();
+        ((MainActivity)getActivity()).hideTopTabs();
+
         emailInput = view.findViewById(R.id.sign_in_input_email);
         passwordInput = view.findViewById(R.id.sign_in_input_password);
         signUpButton = view.findViewById(R.id.to_sign_up);

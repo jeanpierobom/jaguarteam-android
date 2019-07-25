@@ -18,8 +18,6 @@ import android.widget.EditText;
 import android.widget.ListView;
 import android.widget.Spinner;
 
-import org.json.JSONObject;
-
 import java.util.ArrayList;
 import java.util.Map;
 
@@ -43,6 +41,7 @@ public class StudentHomeFragment extends Fragment {
         final View view = inflater.inflate(R.layout.student_home_layout,container,false);
 
         ((MainActivity)getActivity()).showBottomNavigation();
+        ((MainActivity)getActivity()).showTopTabs();
 
         searchButton = view.findViewById(R.id.home_search_button);
         searchResults = view.findViewById(R.id.home_search_results);
@@ -94,7 +93,11 @@ public class StudentHomeFragment extends Fragment {
                 int cityID;
                 int languageID = languageList.get(languagesDropDown.getSelectedItem().toString());
                if(locationInput.getText()!=null && cities!=null) {
-                   cityID = cities.get(locationInput.getText().toString());
+                   try {
+                       cityID = cities.get(locationInput.getText().toString());
+                   }catch(Exception e){
+                       cityID = 1;
+                   }
                }
                else{
                    cityID = 1;

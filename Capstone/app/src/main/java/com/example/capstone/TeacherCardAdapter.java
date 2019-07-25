@@ -7,8 +7,8 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
-import android.widget.EditText;
 import android.widget.ImageView;
+import android.widget.RatingBar;
 import android.widget.TextView;
 
 import com.example.capstone.asynctasks.ImageDownloader;
@@ -45,9 +45,11 @@ public class TeacherCardAdapter extends ArrayAdapter<Teacher> {
             image.getLayoutParams().width= 100;
         image.requestLayout();
         ((TextView)teacherCard.findViewById(R.id.name)).setText(currentTeacher.getName());
+        ((TextView)teacherCard.findViewById(R.id.teacher_type)).setText(currentTeacher.getTeacherType());
         ((TextView)teacherCard.findViewById(R.id.languages)).setText(currentTeacher.getLanguage(0));
         ((TextView)teacherCard.findViewById(R.id.distance)).setText(String.valueOf(currentTeacher.getDistance()));
         ((TextView)teacherCard.findViewById(R.id.hourly_rate)).setText(String.valueOf(currentTeacher.getHourlyRate()));
+        ((RatingBar)teacherCard.findViewById(R.id.rating)).setRating(currentTeacher.getRating());
 
         return teacherCard;
     }

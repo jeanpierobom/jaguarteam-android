@@ -17,6 +17,7 @@ public class Teacher {
     private float rating;
     private Rating[] ratinsList;
     private ArrayList<Availability> availability;
+    private char teacherType;
 
     public Teacher(){
         String[] defaultLanguage = {"English"};
@@ -34,6 +35,7 @@ public class Teacher {
         this.distance = 1;
         this.rating = 3;
         this.ratinsList = defaultRating;
+        this.teacherType = 'p';
     }
 
     public Teacher(String name){
@@ -52,6 +54,7 @@ public class Teacher {
         this.distance = 1;
         this.rating = 3;
         this.ratinsList = defaultRating;
+        this.teacherType = 'p';
     }
 
     public Teacher(int id, String name, String email, String bio, String city, String[] classTypes, int country, String[] languages, float hourlyRate, float distance, float rating, Rating[] ratings){
@@ -67,6 +70,7 @@ public class Teacher {
         this.distance = distance;
         this.rating = rating;
         this.ratinsList = ratings;
+        this.teacherType = 'p';
     }
 
     public Teacher(int id, String name, String email, String bio, String city, String[] classTypes, int country, String[] languages, float hourlyRate, float distance, float rating, Rating[] ratings, ArrayList<Availability> availability){
@@ -83,6 +87,24 @@ public class Teacher {
         this.rating = rating;
         this.ratinsList = ratings;
         this.availability = availability;
+        this.teacherType = 'p';
+    }
+
+    public Teacher(int id, String name, String email, String bio, String city, String[] classTypes, int country, String[] languages, float hourlyRate, float distance, float rating, Rating[] ratings, ArrayList<Availability> availability, char teacherType){
+        this.id = id;
+        this.name = name;
+        this.email = email;
+        this.city = city;
+        this.bio = bio;
+        this.classTypes = classTypes;
+        this.country = country;
+        this.languages = languages;
+        this.hourlyRate = hourlyRate;
+        this.distance = distance;
+        this.rating = rating;
+        this.ratinsList = ratings;
+        this.availability = availability;
+        this.teacherType = teacherType;
     }
 
     public int getId(){return this.id;}
@@ -101,6 +123,16 @@ public class Teacher {
     public float getHourlyRate(){return this.hourlyRate;}
     public float getDistance(){return this.distance;}
     public float getRating(){return this.rating;}
+    public String getTeacherType(){
+        switch(this.teacherType){
+            case 'P':
+                return "Professional Teacher";
+            case 'C':
+                return "Community Teacher";
+            default:
+                return "Teacher";
+        }
+    }
 
     public ArrayList<Availability> getAvailability() {
         return availability;

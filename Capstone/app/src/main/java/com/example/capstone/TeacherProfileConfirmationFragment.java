@@ -102,7 +102,7 @@ public class TeacherProfileConfirmationFragment extends Fragment implements OnMa
         String name = selectedTeacher.getName();
         String teacherType = "Community Teacher";
         String location = selectedTeacher.getCity();
-        int rating = 4;
+        float rating = selectedTeacher.getRating();
         String time = selectedAvailability.getTimeSlots().get(0) + ", " + selectedAvailability.getDate();
         String language = selectedTeacher.getLanguage(0);
         double cost = selectedTeacher.getHourlyRate();

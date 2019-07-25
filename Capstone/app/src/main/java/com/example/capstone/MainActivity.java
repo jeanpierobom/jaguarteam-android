@@ -40,6 +40,7 @@ public class MainActivity extends AppCompatActivity {
     private Availability selectedAvailability;
     private String selectedClassType;
     private View bottomNavigation;
+    private View topTabs;
 
     MainApplication mMainApplication;
     AuthState mAuthState;
@@ -49,6 +50,7 @@ public class MainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
         bottomNavigation = findViewById(R.id.nav_bottom_view);
+        topTabs = findViewById(R.id.top_tabs);
     }
 
     @Override
@@ -67,6 +69,10 @@ public class MainActivity extends AppCompatActivity {
     public void showBottomNavigation(){
         bottomNavigation.setVisibility(View.VISIBLE);
     }
+
+    public void hideTopTabs(){ topTabs.setVisibility(View.GONE); }
+
+    public void showTopTabs(){ topTabs.setVisibility(View.VISIBLE); }
 
     public void setTeacher(Teacher t){
         selectedTeacher = t;
