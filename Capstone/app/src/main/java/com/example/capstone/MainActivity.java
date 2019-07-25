@@ -16,6 +16,7 @@ import androidx.navigation.NavController;
 import androidx.navigation.Navigation;
 
 import com.google.codelabs.appauth.MainApplication;
+import com.google.codelabs.appauth.OutcomAppAuthInfo;
 
 import net.openid.appauth.AuthState;
 import net.openid.appauth.AuthorizationException;
@@ -37,7 +38,7 @@ public class MainActivity extends AppCompatActivity {
 
     private Teacher selectedTeacher;
     private Availability selectedAvailability;
-    private List<String> selectedClassTypes;
+    private String selectedClassType;
     private View bottomNavigation;
     private View topTabs;
 
@@ -88,11 +89,11 @@ public class MainActivity extends AppCompatActivity {
         return selectedAvailability;
     }
 
-    public void setClassTypes(List<String> c){
-        selectedClassTypes = c;
+    public void setClassTypes(String c){
+        selectedClassType = c;
     }
-    public List<String> getClassTypes(){
-        return selectedClassTypes;
+    public String getClassTypes(){
+        return selectedClassType;
     }
     //OAuth
     @Override
@@ -189,9 +190,13 @@ public class MainActivity extends AppCompatActivity {
                             persistAuthState(authState);
                             Log.i(LOG_TAG, String.format("Token Response [ Access Token: %s, ID Token: %s ]", tokenResponse.accessToken, tokenResponse.idToken));
 
+                            // Store access token for future use
+                            OutcomAppAuthInfo.getInstance().setToken(tokenResponse.idToken);
+                            OutcomAppAuthInfo.getInstance().setMessage("Google Token was retrieve successfully");
+                            OutcomAppAuthInfo.getInstance().setLoginGoogle(true);
+
                             // Navigate to home screen
                             Navigation.findNavController(activity,R.id.navHostFragment).navigate(R.id.action_sign_in_screen_to_student_home_search);
-
                         }
                     }
                 }
@@ -203,6 +208,8 @@ public class MainActivity extends AppCompatActivity {
         getSharedPreferences(SHARED_PREFERENCES_NAME, Context.MODE_PRIVATE).edit()
                 .putString(AUTH_STATE, authState.toJsonString())
                 .commit();
+
+        Log.e("PERSISTING AUTH STATE", "AUTH STATE toString(): " + authState.toJsonString());
         //enablePostAuthorizationFlows();
     }
 
@@ -226,6 +233,5 @@ public class MainActivity extends AppCompatActivity {
         }
         return null;
     }
-
 
 }

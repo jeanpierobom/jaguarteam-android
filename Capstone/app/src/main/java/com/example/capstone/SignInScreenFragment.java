@@ -66,8 +66,7 @@ public class SignInScreenFragment extends Fragment {
         signInButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-            //String email = "student@outcom.io";
-            //String password = "secret";
+            // Read email and password
             String email = emailInput.getText().toString();
             String password = passwordInput.getText().toString();
 
@@ -83,18 +82,19 @@ public class SignInScreenFragment extends Fragment {
                         try {
                             LoginDTO dto = JsonAPIParser.ParseLoginRequest(jsonObject);
                             OutcomAppAuthInfo.getInstance().setLoginInfo(dto, "Token retrieved successfully");
-                            Log.e("TEST POST REQUEST","token: " + dto.getToken());
+                            OutcomAppAuthInfo.getInstance().setLoginGoogle(false);
+                            Log.e("LOGIN POST REQUEST","token: " + dto.getToken());
                             Navigation.findNavController(getActivity(),R.id.navHostFragment).navigate(R.id.action_sign_in_screen_to_student_home_search);
                         } catch(Exception e) {
-                            Log.e("TEST GET REQUEST","Error while parsing token: " + e);
+                            Log.e("LOGIN POST REQUEST","Error while parsing token: " + e);
                             OutcomAppAuthInfo.getInstance().setLoginInfo(null, "Error to retrieve token: " + e.getMessage());
                         }
                     }
                 });
             } catch (Exception e) {
-                Log.e("TEST POST REQUEST","An exception has occurred: " + e);
+                Log.e("LOGIN POST REQUEST","An exception has occurred: " + e);
             } finally {
-                Log.e("TEST POST REQUEST","This is finally");
+                Log.e("LOGIN POST REQUEST","This is finally");
             }
             }
         });

@@ -30,6 +30,7 @@ import com.google.android.gms.maps.model.LatLng;
 import com.google.android.gms.maps.model.Marker;
 import com.google.android.gms.maps.model.MarkerOptions;
 import java.io.IOException;
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -85,7 +86,9 @@ public class TeacherProfileConfirmationFragment extends Fragment implements OnMa
 
         selectedTeacher = ((MainActivity)getActivity()).getTeacher();
         selectedAvailability = ((MainActivity)getActivity()).getAvailability();
-        selectedClassType = ((MainActivity)getActivity()).getClassTypes().get(0);
+        // Checking if selectedClassType is not null here.
+
+        selectedClassType = (((MainActivity)getActivity()).getClassTypes() == null || ((MainActivity)getActivity()).getClassTypes().size() == 0) ? "" : ((MainActivity)getActivity()).getClassTypes().get(0);
 
         Log.d("POST_Date", selectedAvailability.getDate());
         Log.d("POST_TimeSlots", selectedAvailability.getTimeSlots().toString());
@@ -172,11 +175,13 @@ public class TeacherProfileConfirmationFragment extends Fragment implements OnMa
     }
 
     public void locationFromName (String userInputName) {
+        // Defining search scope/context
+        String searchContext = " Vancouver, BC, Canada";
         if (userInputName.equals("")) {
             userInputName = "4700 Kingsway, Burnaby, BC V5H 4N2"; // Placeholder address, for testing purposes.
         }
         try {
-            addresses = geocoder.getFromLocationName(userInputName, 1);
+            addresses = geocoder.getFromLocationName(userInputName + searchContext, 1);
             updateUI();
         } catch (IOException e) {
             e.printStackTrace();
@@ -185,18 +190,34 @@ public class TeacherProfileConfirmationFragment extends Fragment implements OnMa
 
     public void sendRequest (Double[] locationCoordinates, String locationName, String inputMessage) {
 
+        // Checking if the parameters we need were initialized. If not, send an empty string.
+        // If the parameter type is String, it will default to the empty string so there is no need to check it here.
+        // Note: selectedClassType has already been checked.
+        String teacherIdParam = selectedTeacher.getId() == 0 ? "" : Integer.toString(selectedTeacher.getId());
+        String timeSlotParam = (selectedAvailability.getTimeSlots() == null || selectedAvailability.getTimeSlots().size() == 0) ? "" : selectedAvailability.getTimeSlots().get(0);
+        String locationLatParam = "", locationLongParam = "";
+        if (locationCoordinates.length == 2) {
+            locationLatParam = locationCoordinates[0].toString();
+            locationLongParam = locationCoordinates[1].toString();
+        } else {
+            Log.e("Error", "Location coordinates array doesn't have two elements");
+        }
+        String priceParam = selectedTeacher.getHourlyRate() == 0.0f ? "" : Float.toString(selectedTeacher.getHourlyRate());
+
         Map<String, String> params = new HashMap<String, String>();
         params.put("studentId", "1");
-        params.put("teacherId", Integer.toString(selectedTeacher.getId()));
+        params.put("teacherId", teacherIdParam);
         params.put("date", selectedAvailability.getDate());
-        params.put("startTime", selectedAvailability.getTimeSlots().get(0));
+        params.put("startTime", timeSlotParam);
         params.put("duration", "01:00");
         params.put("classType", selectedClassType);
         params.put("location", locationName);
-        params.put("locationLat", locationCoordinates[0].toString());
-        params.put("locationLong", locationCoordinates[1].toString());
-        params.put("price", Float.toString(selectedTeacher.getHourlyRate()));
+        params.put("locationLat", locationLatParam);
+        params.put("locationLong", locationLongParam);
+        params.put("price", priceParam);
         params.put("message", inputMessage);
+
+        Log.d("POST_Map", params.toString());
 
         try {
             APICaller.Post("class", params, new APICallBack() {
@@ -218,9 +239,6 @@ public class TeacherProfileConfirmationFragment extends Fragment implements OnMa
         }
 
         alert.show();
-        Log.d("POST_Map", params.toString());
-
-
     }
 
     @Override
