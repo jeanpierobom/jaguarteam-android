@@ -332,9 +332,22 @@ public class JsonAPIParser {
             while(reader.hasNext()){
                 name = reader.nextName();
                 if(name.equals("score")){
-                    value = (float)reader.nextDouble();
+                    if(reader.peek()==JsonToken.NULL){
+                        value = 0;
+                        reader.skipValue();
+                    }
+                    else {
+                        value = (float)reader.nextDouble();
+                    }
+
                 }else if(name.equals("comment")){
-                    comment = reader.nextString();
+                    if(reader.peek()==JsonToken.NULL){
+                        comment = "";
+                        reader.skipValue();
+                    }
+                    else {
+                        comment = reader.nextString();
+                    }
                 }else if(name.equals("author")){
                     author = reader.nextString();
                 }else if(name.equals("date")){
